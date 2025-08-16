@@ -1,13 +1,12 @@
 const Discord = require('discord.js');
 const db = require('../../Events/loadDatabase');
 const { EmbedBuilder } = require('discord.js');
-const config = require('../../config.json');
 
 exports.help = {
   name: 'calc',
   sname: 'calc',
-  description: 'Permet de calculer',
-  use: 'calc <calcul> ・ multiplier = * et diviser = /'
+  description: 'Permet de faires des calculs simples',
+  use: 'calc <calcul> | multiplier = * | diviser = /'
 };
 
 exports.run = async (bot, message, args, config) => {

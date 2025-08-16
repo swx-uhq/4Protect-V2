@@ -1,12 +1,10 @@
-const Discord = require('discord.js');
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, EmbedBuilder } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
 const db = require('../../Events/loadDatabase');
-const config = require('../../config.json');
 
 exports.help = {
   name: 'setconfess',
   sname: 'setconfess <salon/off>',
-  description: 'Permet de configurer le salon de confess',
+  description: 'Permet de configurer le salon de confession',
   use: 'setconfess <salon/off>',
 };
 
@@ -150,23 +148,23 @@ if (public) {
 
     const confessChannel = message.guild.channels.cache.get(channelId);
     if (confessChannel) {
-      let confessionNumber = 1;
+      let confessiontotal = 1;
       db.get('SELECT COUNT(*) as count FROM confesslogs WHERE guildId = ?', [message.guild.id], (err2, row2) => {
-        if (!err2 && row2) confessionNumber = row2.count + 1;
+        if (!err2 && row2) confessiontotal = row2.count + 1;
 
         const embed = new EmbedBuilder()
           .setTitle(`Confession`)
           .setDescription('Clique sur le bouton ci-dessous pour te confesser')
           .setColor(config.color);
 
-        const rowBtn = new ActionRowBuilder().addComponents(
+        const button = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
             .setCustomId('confess_open')
             .setLabel('Se confesser')
             .setStyle(ButtonStyle.Primary)
         );
 
-        confessChannel.send({ embeds: [embed], components: [rowBtn] });
+        confessChannel.send({ embeds: [embed], components: [button] });
       });
     }
   });
@@ -178,23 +176,23 @@ if (public) {
 
     const confessChannel = message.guild.channels.cache.get(channelId);
     if (confessChannel) {
-      let confessionNumber = 1;
+      let confessiontotal = 1;
       db.get('SELECT COUNT(*) as count FROM confesslogs WHERE guildId = ?', [message.guild.id], (err2, row2) => {
-        if (!err2 && row2) confessionNumber = row2.count + 1;
+        if (!err2 && row2) confessiontotal = row2.count + 1;
 
         const embed = new EmbedBuilder()
           .setTitle(`Confession`)
           .setDescription('Clique sur le bouton ci-dessous pour te confesser')
           .setColor(config.color);
 
-        const rowBtn = new ActionRowBuilder().addComponents(
+        const button = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
             .setCustomId('confess_open')
             .setLabel('Se confesser')
             .setStyle(ButtonStyle.Primary)
         );
 
-        confessChannel.send({ embeds: [embed], components: [rowBtn] });
+        confessChannel.send({ embeds: [embed], components: [button] });
                   });
           }
         });

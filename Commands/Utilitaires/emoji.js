@@ -1,11 +1,9 @@
-const { PermissionsBitField } = require('discord.js');
-const config = require('../../config.json');
 const db = require('../../Events/loadDatabase');
 
 exports.help = {
   name: 'emoji',
   sname: 'emoji <emoji>',
-  description: "Copie un emoji",
+  description: "Permet de copier un emoji",
   use: 'emoji <emoji>',
 };
 
@@ -103,11 +101,7 @@ if (public) {
     const name = emj[2];
     const id = emj[3];
     const url = `https://cdn.discordapp.com/emojis/${id}.${animated ? 'gif' : 'png'}?v=1`;
-    try {
-      const emoji = await message.guild.emojis.create({ name, attachment: url });
+    const emoji = await message.guild.emojis.create({ name, attachment: url });
       return message.reply(`Emoji ajouté : <${animated ? 'a' : ''}:${name}:${emoji.id}>`);
-    } catch (e) {
-      return message.reply("Impossible d'ajouter l'emoji : " + (e.message || e));
-    }
   }
 };

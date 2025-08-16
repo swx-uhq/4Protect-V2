@@ -1,4 +1,5 @@
 const { EmbedBuilder } = require('discord.js');
+const db = require('../../Events/loadDatabase');
 
 exports.help = {
   name: 'gend',

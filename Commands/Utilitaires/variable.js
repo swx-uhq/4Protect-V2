@@ -1,11 +1,10 @@
 const Discord = require('discord.js');
 const db = require('../../Events/loadDatabase');
-const config = require('../../config.json');
 
 exports.help = {
   name: 'variable',
   sname: 'variable',
-  description: 'Affiche les variables utilisables dans le message de bienvenue',
+  description: "Permet d'afficher les variables pour le message de bienvenue",
   use: 'variable',
 };
 

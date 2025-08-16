@@ -1,11 +1,10 @@
-const config = require('../../config.json');
 const { EmbedBuilder } = require('discord.js');
 const db = require('../../Events/loadDatabase');
 
 exports.help = {
   name: 'voicemove',
   sname: 'voicemove <@mention/id>',
-  description: "Déplace un membre en vocal",
+  description: "Permet de déplacer un membre de vocal",
   use: 'voicemove <@mention/id>',
 };
 

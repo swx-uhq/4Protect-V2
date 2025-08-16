@@ -1,7 +1,5 @@
-const Discord = require('discord.js');
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
 const db = require('../../Events/loadDatabase');
-const config = require('../../config.json');
 
 exports.help = {
   name: 'setsuggest',
@@ -99,23 +97,19 @@ if (public) {
   }
 
   const arg = message.content.trim().split(/ +/g);
-  if (!arg[1]) {
-    return message.reply({ content: `Utilisation : \`${config.prefix}setsuggest <salon/off>\`` });
-  }
 
   if (arg[1].toLowerCase() === "off") {
     db.run(`UPDATE Suggest SET channel = ? WHERE guildId = ?`, ['off', message.guild.id], function (err) {
       if (err) return message.reply("Erreur lors de la désactivation.");
       return message.reply("Le système de suggestions a été désactivé.");
     });
-    return;
   }
 
   const channelId = arg[1].replace("<#", "").replace(">", "");
   const suggestChannel = message.guild.channels.cache.get(channelId);
 
   if (!suggestChannel || suggestChannel.type !== 0) {
-    return message.reply("Salon invalide.");
+    return message.reply("Le salon doit être un salon textuel.");
   }
 
   db.get('SELECT channel FROM Suggest WHERE guildId = ?', [message.guild.id], (err, row) => {

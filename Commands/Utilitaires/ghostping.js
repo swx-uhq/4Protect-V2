@@ -1,11 +1,10 @@
-const config = require('../../config.json');
 const db = require('../../Events/loadDatabase');
 
 exports.help = {
   name: 'ghostping',
-  sname: 'ghostping <#channel1,#...>',
-  description: "Ping un nouveau membre dans plusieurs salons",
-  use: 'ghostping <#channel,#...>',
+  sname: 'ghostping <#01,#02,..>',
+  description: "Permet de configurer le ghostping",
+  use: 'ghostping <#01,#02,..>',
 };
 
 exports.run = async (bot, message, args, config) => {
@@ -97,9 +96,8 @@ if (public) {
   }
 
 
-  const channelIds = args.join(' ').split(',').map(str => str.replace(/[<#> ]/g, '')).filter(Boolean);
-
-  if (channelIds.length === 0) return message.reply("Aucun salon trouvé.");
+  const channelId = args.join(' ').split(',').map(str => str.replace(/[<#> ]/g, '')).filter(Boolean);
+  if (channelId.length === 0) return
 
   db.run(
     `CREATE TABLE IF NOT EXISTS ghostping (guild TEXT PRIMARY KEY, channels TEXT)`,
@@ -108,10 +106,10 @@ if (public) {
       if (err) return message.reply("Une erreur est survenue.");
       db.run(
         `INSERT OR REPLACE INTO ghostping (guild, channels) VALUES (?, ?)`,
-        [message.guild.id, channelIds.join(',')],
+        [message.guild.id, channelId.join(',')],
         (err) => {
           if (err) return message.reply("Une erreur est survenue.");
-          message.reply("Ghostping : " + channelIds.map(id => `<#${id}>`).join(', '));
+          message.reply("Les salons pour le Ghostping : " + channelId.map(id => `<#${id}>`).join(', '));
         }
       );
     }

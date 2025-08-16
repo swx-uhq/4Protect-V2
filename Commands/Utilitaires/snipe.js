@@ -1,12 +1,11 @@
 const Discord = require('discord.js');
 const { EmbedBuilder } = require('discord.js');
 const db = require('../../Events/loadDatabase');
-const config = require('../../config.json');
 
 exports.help = {
   name: 'snipe',
   sname: 'snipe',
-  description: "Permet d'afficher le dernier message qui a été supprimé du salon",
+  description: "Permet d'afficher le dernier message qui a été supprimé",
   use: 'snipe',
 };
 

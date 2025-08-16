@@ -248,7 +248,6 @@ if (public) {
           channel.send({ embeds: [embed] });
           collected.first().delete();
           msgqst.delete();
-                    msgsd.message.channel.send({ content: "L'embed a bien été envoyé dans le salon **" + channel.name + "**." });
         });
     }
   });

@@ -1,11 +1,10 @@
 const db = require('../../Events/loadDatabase');
-const config = require('../../config.json');
 
 exports.help = {
   name: 'soutien',
-  sname: 'soutien <clear/@role/id> <texte>',
-  description: "Gère le soutien",
-  use: 'soutien <clear/@role/id> <texte>',
+  sname: 'soutien <clear/role> <texte>',
+  description: "Permet de configurer le soutien",
+  use: 'soutien <clear/role> <texte>',
 };
 
 exports.run = async (bot, message, args, config) => {
@@ -96,12 +95,10 @@ if (public) {
   return message.reply({embeds: [noacces], allowedMentions: { repliedUser: true }});
   }
 
-  const roleArg = args[0];
-
-  if (roleArg && roleArg.toLowerCase() === 'clear') {
+  if (args[0] && args[0].toLowerCase() === 'clear') {
     db.run('DELETE FROM soutien WHERE guild = ?', [message.guild.id], (err) => {
       if (err) return message.reply("Une erreur est survenue lors du clear.");
-      return message.reply("La configuration du soutien a été supprimée.");
+      return message.reply("Le système de soutien est désactivé.");
     });
     return;
   }
@@ -111,12 +108,8 @@ if (public) {
 
   if (message.mentions.roles.size > 0) {
     role = message.mentions.roles.first();
-  } else if (roleArg && message.guild.roles.cache.get(roleArg)) {
-    role = message.guild.roles.cache.get(roleArg);
-  }
-
-  if (!role || !text) {
-    return message.reply("Use: soutien <@role/id> <texte>");
+  } else if (args[0] && message.guild.roles.cache.get(args[0])) {
+    role = message.guild.roles.cache.get(args[0]);
   }
 
   db.run(

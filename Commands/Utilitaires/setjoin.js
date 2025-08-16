@@ -1,11 +1,10 @@
 const { EmbedBuilder } = require('discord.js');
 const db = require('../../Events/loadDatabase');
-const config = require('../../config.json');
 
 exports.help = {
   name: 'setjoin',
   sname: 'setjoin <salon/off> <message>',
-  description: 'Configure le salon et le message de bienvenue pour les nouveaux membres',
+  description: 'Permet de configurer un message de bienvenue',
   use: 'setjoin <salon/off> <message>',
 };
 
@@ -98,28 +97,21 @@ if (public) {
   }
 
   const arg = message.content.trim().split(/ +/g);
-  if (!arg[1]) {
-    return message.reply({ content: `Use: \`${config.prefix}setjoin <salon/off> <message>\`` });
-  }
 
   if (arg[1].toLowerCase() === "off") {
     db.run(`UPDATE joinsettings SET channel = ?, message = ? WHERE guildId = ?`, ['off', '', message.guild.id], function (err) {
       if (err) return message.reply("Erreur lors de la désactivation ou est-ce déjà désactivé ?");
-      return message.reply("Le système de bienvenue a été désactivé.");
+      return message.reply("Le message de bienvenue a bien été désactivé.");
     });
-    return;
   }
 
   const channelId = arg[1].replace("<#", "").replace(">", "");
   const joinChannel = message.guild.channels.cache.get(channelId);
   if (!joinChannel || joinChannel.type !== 0) {
-    return message.reply("Salon invalide.");
+    return message.reply("Le salon doit etre un salon textuel.");
   }
 
   const joinMsg = arg.slice(2).join(" ");
-  if (!joinMsg) {
-    return message.reply("Préciser un message de bienvenue.");
-  }
 
   db.get('SELECT channel FROM joinsettings WHERE guildId = ?', [message.guild.id], (err, row) => {
     if (err) return message.reply("Erreur SQL.");

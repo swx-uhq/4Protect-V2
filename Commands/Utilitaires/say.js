@@ -1,10 +1,9 @@
-const Discord = require('discord.js');
-const config = require('../../config.json');
+const db = require('../../Events/loadDatabase');
 
 exports.help = {
   name: 'say',
   sname: 'say <message>',
-  description: "Permet d'envoyer des messages avec le bot",
+  description: "Permet de faire répéter un message",
   use: 'say <message>',
 };
 
@@ -95,17 +94,11 @@ if (public) {
     .setColor(config.color);
   return message.reply({embeds: [noacces], allowedMentions: { repliedUser: true }});
   }
-    
 
   const text = args.join(' ');
   if (!text) {
     return 
   }
-
-  try {
     await message.delete();
     await message.channel.send(text);
-  } catch (error) {
-    return
-  }
 };
