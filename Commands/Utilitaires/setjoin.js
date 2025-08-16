@@ -1,18 +1,6 @@
 const { EmbedBuilder } = require('discord.js');
 const db = require('../../Events/loadDatabase');
 
-function format(tpl, member) {
-  const map = {
-    '{user}': `<@${member.id}>`,
-    '{user.name}': member.user.username,
-    '{user.tag}': member.user.tag,
-    '{user.id}': member.id,
-    '{guild}': member.guild.name,
-    '{guild.memberCount}': String(member.guild.memberCount),
-  };
-  return tpl.replace(/\{[^}]+\}/g, (m) => map[m] ?? m);
-}
-
 exports.help = {
   name: 'setjoin',
   sname: 'setjoin <salon/off> <message>',
