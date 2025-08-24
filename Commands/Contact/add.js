@@ -103,7 +103,7 @@ if (public) {
   }
 
   const channel = message.channel;
-  channel.permissionOverwrites.create(user, { VIEW_CHANNEL: true })
+  channel.permissionOverwrites.edit(user, { ViewChannel: true })
     .then(() => {
       message.reply(`${user} a été ajouté au ticket`);
     })
