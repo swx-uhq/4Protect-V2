@@ -106,7 +106,7 @@ if (public) {
     return
   }
   const channel = message.channel;
-  channel.permissionOverwrites.edit(user, { VIEW_CHANNEL: null })
+  channel.permissionOverwrites.edit(user, { ViewChannel: null })
     .then(() => {
       message.reply(`${user} a été enlevé du ticket`);
     })
