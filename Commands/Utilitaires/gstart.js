@@ -99,7 +99,7 @@ if (public) {
   }
 
   let embed = new EmbedBuilder()
-    .setDescription(`${bot.prefix}gstart <>durée> <gagnant> <prix>`)
+    .setDescription(`${config.prefix}gstart <durée> <gagnant> <prix>`)
     .setColor(config.color)
 
   if (!args[0] || !args[1] || !args[2]) return message.reply({ embeds: [embed] });
