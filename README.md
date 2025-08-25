@@ -1,7 +1,5 @@
 # 4Protect V2
 
-Merci au don de Topher qui m'a fait reprendre le développement...
-
 ## Fonctionnalités
 - Discord.js V14 
 - Database
