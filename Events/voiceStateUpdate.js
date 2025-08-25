@@ -30,7 +30,6 @@ module.exports = {
                 PermissionsBitField.Flags.MoveMembers,
                 PermissionsBitField.Flags.MuteMembers,
                 PermissionsBitField.Flags.DeafenMembers,
-                PermissionsBitField.Flags.ManageChannels,
                 PermissionsBitField.Flags.ViewChannel,
                 PermissionsBitField.Flags.UseVAD,
                 PermissionsBitField.Flags.Stream,
