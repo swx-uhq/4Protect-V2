@@ -36,7 +36,8 @@ module.exports = {
                 PermissionsBitField.Flags.Connect,
                 PermissionsBitField.Flags.Speak,
                 PermissionsBitField.Flags.UseSoundboard,
-                PermissionsBitField.Flags.SendVoiceMessages
+                PermissionsBitField.Flags.SendVoiceMessages,
+                PermissionsBitField.Flags.ManageChannels
               ]
             },
             {
@@ -50,26 +51,32 @@ module.exports = {
             }
           ]
         }).then((createdChannel) => {
+          db.run('INSERT INTO tempvoc_channels (channelId, guildId) VALUES (?, ?)',[createdChannel.id, guildId]);
           newState.member.voice.setChannel(createdChannel);
         });
       }
 
-      if (
-  oldState.channel &&
-  oldState.channel.parentId === categoryId &&
-  oldState.channel.id !== tempvoc &&
-  oldState.channel.name.startsWith('⏱・Salon temporaire de') &&
-  oldState.channel.members.size === 0
-) {
-  const channelToDelete = oldState.channel;
+      if (!oldState.channel) return;
+
+db.get('SELECT * FROM tempvoc_channels WHERE channelId = ?', [oldState.channel.id], (err, tempChannelRow) => {
+  if (err || !tempChannelRow) return;
+
   setTimeout(() => {
-    const refreshed = channelToDelete.guild.channels.cache.get(channelToDelete.id);
-    if (refreshed && refreshed.members.size === 0) {
-      refreshed.delete({ reason: 'Salon temporaire vide' });
+    const tempchannel = oldState.guild.channels.cache.get(oldState.channel.id);
+    if (tempchannel && tempchannel.members.size === 0) {
+      tempchannel.delete()
+        .catch(err => {
+          if (err.code === 10003) {
+            return;
+          } else {
+            console.error(err);
+          }
+        });
+      db.run('DELETE FROM tempvoc_channels WHERE channelId = ?', [oldState.channel.id]);
     }
-  }, 2000);
-}
-    });
+  }, 1000);
+});
+
 
     db.get('SELECT channels FROM logs WHERE guild = ?', [guildId], async (err, row) => {
   if (err || !row) return;
@@ -125,5 +132,5 @@ module.exports = {
         sendLog(newState.guild, embed, 'voicelog');
       }
     });
-  }
+    })}
 };
