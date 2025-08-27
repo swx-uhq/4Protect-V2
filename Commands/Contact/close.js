@@ -1,16 +1,16 @@
-const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
+const Discord = require('discord.js');
+const db = require('../../Events/loadDatabase');
 const config = require('../../config.json');
 
 exports.help = {
-  name: 'invite',
-  helpname: 'invite',
-  aliases: [],
-  description: "Permet d'inviter le bot sur votre serveur",
-  help: 'invite',
+  name: 'close',
+  helpname: 'close>',
+  description: 'Permet de close le ticket',
+  help: 'close'
 };
 
 exports.run = async (bot, message, args, config) => {
-      const checkPerm = async (message, commandName) => {
+  const checkPerm = async (message, commandName) => {
     if (config.owners.includes(message.author.id)) {
       return true;
     }
@@ -96,17 +96,13 @@ if (publicStatut) {
     .setColor(config.color);
   return message.reply({embeds: [noacces], allowedMentions: { repliedUser: true }});
   }
-    const embed = new EmbedBuilder()
-        .setTitle("Invitation")
-        .setDescription("Pour m'inviter, il suffit de cliquer sur le bouton ci-dessous.")
-        .setColor(config.color);
+    db.get('SELECT channelId FROM ticketchannel WHERE channelId = ?', [message.channel.id], async (err, row) => {
+    if (err) return console.error(err);
+    if (!row) return
 
-    const button = new ButtonBuilder()
-        .setLabel("J'accepte")
-        .setStyle(ButtonStyle.Link)
-        .setURL(`https://discord.com/oauth2/authorize?client_id=${bot.user.id}&permissions=8&integration_type=0&scope=bot`)
-
-    const actionRow = new ActionRowBuilder().addComponents(button);
-
-    return message.reply({ embeds: [embed], components: [actionRow], allowedMentions: { repliedUser: false } });
+    db.run('DELETE FROM ticketchannel WHERE channelId = ?', [message.channel.id], (err2) => {
+      if (err2) console.error(err2);
+    });
+    await message.channel.delete().catch(() => {});
+  });
 };

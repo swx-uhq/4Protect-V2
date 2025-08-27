@@ -3,8 +3,9 @@ const config = require('../../config.json');
 
 exports.help = {
     name: 'name',
+    helpname: 'name <texte>',
     description: "Permet de changer le nom",
-    help: 'name <nom>',
+    help: 'name <texte>',
 };
 
 exports.run = async (bot, message, args) => {

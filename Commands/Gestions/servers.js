@@ -4,6 +4,7 @@ const config = require('../../config.json');
 
 exports.help = {
   name: 'servers',
+  helpname: 'servers',
   description: 'Permet de voir dans quelle serveur le bot est présent',
   help: 'servers',
 };

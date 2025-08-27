@@ -1,16 +1,17 @@
-const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
+const Discord = require('discord.js');
+const db = require('../../Events/loadDatabase');
 const config = require('../../config.json');
+const { EmbedBuilder } = require('discord.js');
 
 exports.help = {
-  name: 'invite',
-  helpname: 'invite',
-  aliases: [],
-  description: "Permet d'inviter le bot sur votre serveur",
-  help: 'invite',
+  name: 'rename',
+  helpname: 'rename <message>>',
+  description: 'Permet de renommer un ticket',
+  help: 'rename <message>'
 };
 
 exports.run = async (bot, message, args, config) => {
-      const checkPerm = async (message, commandName) => {
+  const checkPerm = async (message, commandName) => {
     if (config.owners.includes(message.author.id)) {
       return true;
     }
@@ -96,17 +97,26 @@ if (publicStatut) {
     .setColor(config.color);
   return message.reply({embeds: [noacces], allowedMentions: { repliedUser: true }});
   }
+    if (!args[0]) {
+    return
+  }
+
+  db.get('SELECT channelId FROM ticketchannel WHERE channelId = ?', [message.channel.id], async (err, row) => {
+    if (err) {
+      console.error(err);
+      return
+    }
+    if (!row) {
+      return message.reply("Ce salon n’est pas un ticket.");
+    }
+
+    const rename = args.join(' '); 
+    await message.channel.setName(rename).catch(() => {});
+
     const embed = new EmbedBuilder()
-        .setTitle("Invitation")
-        .setDescription("Pour m'inviter, il suffit de cliquer sur le bouton ci-dessous.")
-        .setColor(config.color);
+      .setDescription(`Le ticket a été renommé en ${rename}`)
+      .setColor(config.color);
 
-    const button = new ButtonBuilder()
-        .setLabel("J'accepte")
-        .setStyle(ButtonStyle.Link)
-        .setURL(`https://discord.com/oauth2/authorize?client_id=${bot.user.id}&permissions=8&integration_type=0&scope=bot`)
-
-    const actionRow = new ActionRowBuilder().addComponents(button);
-
-    return message.reply({ embeds: [embed], components: [actionRow], allowedMentions: { repliedUser: false } });
+    message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+  });
 };

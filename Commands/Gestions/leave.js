@@ -3,8 +3,9 @@ const config = require('../../config.json');
 
 exports.help = {
     name: 'leave',
+    helpname: 'leave <serverId>',
     description: 'Permet de quitter un serveur',
-    help: 'leave <ID du serveur>',
+    help: 'leave <serverId>',
 };
 
 exports.run = async (bot, message, args) => {
@@ -112,6 +113,6 @@ if (publicStatut) {
         return message.reply({ content: `J'ai bien quitté le serveur : ${guild.name}`, allowedMentions: { repliedUser: false } });
     } catch (error) {
         console.error(error);
-        return message.reply({ content: `Une erreur est survenue.`, allowedMentions: { repliedUser: false } });
+        return
     }
 };

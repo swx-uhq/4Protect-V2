@@ -4,6 +4,7 @@ const config = require('../../config.json');
 
 exports.help = {
   name: 'alladmins',
+  helpname: 'alladmins',
   description: "Permet d'afficher la liste des administrateurs",
   help: 'alladmins',
 };

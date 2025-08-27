@@ -4,6 +4,7 @@ const config = require('../../config.json');
 
 exports.help = {
   name: 'allbans',
+  helpname: 'allbans',
   description: "Permet de voir la liste des membres bannis",
   help: 'allbans',
 };

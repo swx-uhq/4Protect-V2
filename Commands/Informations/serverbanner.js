@@ -4,6 +4,7 @@ const config = require('../../config.json');
 
 exports.help = {
     name: 'serverbanner',
+    helpname: 'serverbanner',
     description: "Affiche la bannière du serveur",
     help: 'serveurbanner',
 };

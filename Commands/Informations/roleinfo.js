@@ -4,6 +4,7 @@ const config = require('../../config.json');
 
 exports.help = {
   name: 'roleinfo',
+  helpname: 'roleinfo <mention/id>',
   description: "Affiche des informations sur un rôle",
   help: 'roleinfo <mention/id>',
 };

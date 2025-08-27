@@ -4,6 +4,7 @@ const config = require('../../config.json');
 
 exports.help = {
     name: 'rolemembers',
+    helpname: 'rolemembers <mention/id>',
     description: "Permet d'afficher un rôle avec ses membres",
     help: 'rolemembers <mention/id>',
 };

@@ -4,6 +4,7 @@ const config = require('../../config.json');
 
 exports.help = {
     name: 'userinfo',
+    helpname: 'userinfo [mention/id]',
     description: "Permet d'afficher des informations sur un utilisateur",
     help: 'userinfo [mention/id]',
 };

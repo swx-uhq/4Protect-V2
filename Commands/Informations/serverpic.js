@@ -4,6 +4,7 @@ const config = require('../../config.json');
 
 exports.help = {
     name: 'serverpic',
+    helpname: 'serverpic',
     aliases: [],
     description: "Affiche l'icône du serveur",
     help: 'serverpic',

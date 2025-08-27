@@ -4,6 +4,7 @@ const config = require('../../config.json');
 
 exports.help = {
   name: 'allbots',
+  helpname: 'allbots',
   description: "Permet de voir la liste des bots",
   help: 'allbots',
 };

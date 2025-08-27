@@ -3,7 +3,8 @@ const config = require('../../config.json');
 
 exports.help = {
     name: 'avatar',
-    description: "Permet de changer la photo de profil",
+    helpname: 'avatar <url>',
+    description: "Permet de changer la photo de profil du bot",
     help: 'avatar <url>',
 };
 

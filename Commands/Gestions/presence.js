@@ -1,9 +1,11 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const config = require('../../config.json');
+const db = require('../../Events/loadDatabase'); 
 
 exports.help = {
   name: 'presence',
-  description: 'Permet de changer le statut',
+  helpname: 'presence <online/idle/dnd/invisible>',
+  description: 'Permet de changer le statut du bot',
   help: 'presence <online/idle/dnd/invisible>',
 };
 

@@ -1,9 +1,10 @@
 const { Client, GatewayIntentBits, ActivityType } = require('discord.js');
 const config = require('../../config.json');
-
+const db = require('../../Events/loadDatabase'); 
 
 exports.help = {
   name: 'activity',
+  helpname: 'activity <listen/play/stream/watch/compet/custom/stop> [texte]',
   description: 'Permet de changer l\'activité du bot',
   help: 'activity <listen/play/stream/watch/compet/custom/stop> [texte]',
 };

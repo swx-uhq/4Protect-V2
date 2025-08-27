@@ -4,6 +4,7 @@ const config = require('../../config.json');
 
 exports.help = {
     name: 'serverinfo',
+    helpname: 'serverinfo',
     description: "Affiche les informations du serveur",
     help: 'serverinfo',
 };

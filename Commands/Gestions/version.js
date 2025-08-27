@@ -1,5 +1,8 @@
+const db = require('../../Events/loadDatabase'); 
+
 exports.help = {
     name: 'version',
+    helpname: 'version',
     description: "Permet d'afficher la version du bot",
     help: 'version',
   };

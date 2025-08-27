@@ -3,6 +3,7 @@ const config = require('../../config.json');
 
 exports.help = {
   name: 'boosters',
+  helpname: 'boosters',
   description: "Permet de voir la liste des boosters",
   help: 'boosters',
 };

@@ -164,8 +164,12 @@ if (interaction.isButton() && interaction.customId.startsWith('giveaway_')) {
     }
 
     if (interaction.isButton() && interaction.customId === 'ticket_close') {
-    interaction.channel.delete().catch(() => {});
+  db.run('DELETE FROM ticketchannel WHERE channelId = ?', [interaction.channel.id], (err) => {
+    if (err) console.error(err);
+  });
+  interaction.channel.delete().catch(() => {});
 }
+
 
         if (interaction.isStringSelectMenu() && interaction.customId === 'ticket_select') {
       const optiontxt = config[interaction.values[0]] || 'Ticket';
@@ -189,6 +193,14 @@ if (interaction.isButton() && interaction.customId.startsWith('giveaway_')) {
       { id: interaction.client.user.id, allow: ['ViewChannel', 'SendMessages', 'ManageChannels'] },
     ],
   });
+  db.run(
+  'INSERT INTO ticketchannel (channelId) VALUES (?)',
+  [ticketChannel.id],
+  (err) => {
+    if (err) console.error(err);
+  }
+);
+
         const close = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
             .setCustomId('ticket_close')
@@ -209,7 +221,7 @@ if (interaction.isButton() && interaction.customId.startsWith('giveaway_')) {
           ],
           components: [close]
         });
-        return interaction.reply({ content: `Votre ticket: ${ticketChannel}`, ephemeral: true });
+        return interaction.reply({ content: `Votre ticket: ${ticketChannel}`, flags: 64 });
       });
 }
   }
