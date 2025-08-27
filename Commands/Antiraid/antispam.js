@@ -4,7 +4,7 @@ const config = require('../../config.json');
 exports.help = {
   name: 'antispam',
   description: "Active ou désactive l'antispam",
-  use: 'antispam on/off <message> <sous> <durée du timeout>\nExemple: antispam on 3 10s 1m \n(3 messages en 10 secondes, timeout de 1 minute)\nTemps: 1s, 1m, 1h, 1h (exemples)',
+  help: 'antispam on/off <message> <sous> <durée du timeout>\nExemple: antispam on 3 10s 1m \n(3 messages en 10 secondes, timeout de 1 minute)\nTemps: 1s, 1m, 1h, 1h (exemples)',
 };
 
 function parseTime(str) {
@@ -17,21 +17,21 @@ function parseTime(str) {
 }
 
 exports.run = async (bot, message, args) => {
-  const checkperm = async (message, commandName) => {
+  const checkPerm = async (message, commandName) => {
     if (config.owners.includes(message.author.id)) {
       return true;
     }
 
-const public = await new Promise((resolve, reject) => {
+const publicStatut = await new Promise((resolve, reject) => {
   db.get('SELECT statut FROM public WHERE guild = ? AND statut = ?', [message.guild.id, 'on'], (err, row) => {
     if (err) reject(err);
     resolve(!!row);
   });
 });
 
-if (public) {
+if (publicStatut) {
 
-  const publiccheck = await new Promise((resolve, reject) => {
+  const checkPublicCmd = await new Promise((resolve, reject) => {
     db.get(
       'SELECT command FROM cmdperm WHERE perm = ? AND command = ? AND guild = ?',
       ['public', commandName, message.guild.id],
@@ -42,38 +42,38 @@ if (public) {
     );
   });
 
-  if (publiccheck) {
+  if (checkPublicCmd) {
     return true;
   }
 }
     
     try {
-      const userwl = await new Promise((resolve, reject) => {
+      const checkUserWl = await new Promise((resolve, reject) => {
         db.get('SELECT id FROM whitelist WHERE id = ?', [message.author.id], (err, row) => {
           if (err) reject(err);
           resolve(!!row);
         });
       });
 
-      if (userwl) {
+      if (checkUserWl) {
         return true;
       }
 
-            const userowner = await new Promise((resolve, reject) => {
+            const checkDbOwner = await new Promise((resolve, reject) => {
         db.get('SELECT id FROM owner WHERE id = ?', [message.author.id], (err, row) => {
           if (err) reject(err);
           resolve(!!row);
         });
       });
 
-      if (userowner) {
+      if (checkDbOwner) {
         return true;
       }
 
-      const userRoles = message.member.roles.cache.map(role => role.id);
+      const roles = message.member.roles.cache.map(role => role.id);
 
       const permissions = await new Promise((resolve, reject) => {
-        db.all('SELECT perm FROM permissions WHERE id IN (' + userRoles.map(() => '?').join(',') + ') AND guild = ?', [...userRoles, message.guild.id], (err, rows) => {
+        db.all('SELECT perm FROM permissions WHERE id IN (' + roles.map(() => '?').join(',') + ') AND guild = ?', [...roles, message.guild.id], (err, rows) => {
           if (err) reject(err);
           resolve(rows.map(row => row.perm));
         });
@@ -83,21 +83,21 @@ if (public) {
         return false;
       }
 
-      const cmdwl = await new Promise((resolve, reject) => {
+      const checkCmdPermLevel = await new Promise((resolve, reject) => {
         db.all('SELECT command FROM cmdperm WHERE perm IN (' + permissions.map(() => '?').join(',') + ') AND guild = ?', [...permissions, message.guild.id], (err, rows) => {
           if (err) reject(err);
           resolve(rows.map(row => row.command));
         });
       });
 
-      return cmdwl.includes(commandName);
+      return checkCmdPermLevel.includes(commandName);
     } catch (error) {
       console.error('Erreur lors de la vérification des permissions:', error);
       return false;
     }
   };
 
-  if (!(await checkperm(message, exports.help.name))) {
+  if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande.")
     .setColor(config.color);

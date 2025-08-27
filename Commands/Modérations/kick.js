@@ -5,9 +5,9 @@ const sendLog = require('../../Events/sendlog');
 
 exports.help = {
   name: 'kick',
-  sname: 'kick <mention/id> <raison>',
+  helpname: 'kick <mention/id> <raison>',
   description: "Permet de kick un membre.",
-  use: 'kick <mention/id> <raison>',
+  help: 'kick <mention/id> <raison>',
 };
 
 exports.run = async (bot, message, args, config) => {
