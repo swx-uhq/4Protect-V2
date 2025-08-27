@@ -102,6 +102,6 @@ if (publicStatut) {
     const id = emj[3];
     const url = `https://cdn.discordapp.com/emojis/${id}.${animated ? 'gif' : 'png'}?v=1`;
     const emoji = await message.guild.emojis.create({ name, attachment: url });
-      return message.reply(`Emoji ajouté : <${animated ? 'a' : ''}:${name}:${emoji.id}>`);
+      return message.reply(`L'émoji <${animated ? 'a' : ''}:${name}:${emoji.id}> a été ajouté.`);
   }
 };

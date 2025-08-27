@@ -5,7 +5,7 @@ const ms = require('ms');
 
 exports.help = {
   name: 'gstart',
-  helpname: 'gstart',
+  helpname: 'gstart <durée> <gagnant> <prix>',
   description: 'Permet de créer un giveaway',
   help: 'gstart <durée> <gagnant> <prix>'
 };
@@ -98,20 +98,16 @@ if (publicStatut) {
   return message.reply({embeds: [noacces], allowedMentions: { repliedUser: true }});
   }
 
-  let embed = new EmbedBuilder()
-    .setDescription(`${config.prefix}gstart <durée> <gagnant> <prix>`)
-    .setColor(config.color)
-
-  if (!args[0] || !args[1] || !args[2]) return message.reply({ embeds: [embed] });
+  if (!args[0] || !args[1] || !args[2]) return 
 
   let duration = args[0];
-  if (!duration || isNaN(ms(duration))) return message.reply({ embeds: [embed] });
+  if (!duration || isNaN(ms(duration))) return
 
   let winnerCount = parseInt(args[1]);
-  if (isNaN(winnerCount) || winnerCount <= 0) return message.reply({ embeds: [embed] });
+  if (isNaN(winnerCount) || winnerCount <= 0) return 
 
   let prize = args.slice(2).join(" ");
-  if (!prize) return message.reply({ embeds: [embed] });
+  if (!prize) return
 
   await message.delete();
 

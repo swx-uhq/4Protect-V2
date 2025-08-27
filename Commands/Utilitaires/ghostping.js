@@ -2,9 +2,9 @@ const db = require('../../Events/loadDatabase');
 
 exports.help = {
   name: 'ghostping',
-  helpname: 'ghostping <#01,#02,..>',
+  helpname: 'ghostping <#salon,#salon2,...>',
   description: "Permet de configurer le ghostping",
-  help: 'ghostping <#01,#02,..>',
+  help: "ghostping <#01,#02,..>\nTu peux définir plusieurs salons en les séparant par des virgules sans espaces",
 };
 
 exports.run = async (bot, message, args, config) => {
@@ -103,12 +103,12 @@ if (publicStatut) {
     `CREATE TABLE IF NOT EXISTS ghostping (guild TEXT PRIMARY KEY, channels TEXT)`,
     [],
     (err) => {
-      if (err) return message.reply("Une erreur est survenue.");
+      if (err) return
       db.run(
         `INSERT OR REPLACE INTO ghostping (guild, channels) VALUES (?, ?)`,
         [message.guild.id, channelId.join(',')],
         (err) => {
-          if (err) return message.reply("Une erreur est survenue.");
+          if (err) return
           message.reply("Les salons pour le Ghostping : " + channelId.map(id => `<#${id}>`).join(', '));
         }
       );

@@ -2,9 +2,9 @@ const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 
 exports.help = {
   name: 'greroll',
-  helpname: 'greroll',
-  description: 'Permet de reroll un giveaway',
-  help: 'greroll <id>'
+  helpname: 'greroll <messageId>',
+  description: 'Permet de choisir un nouveau gagnant pour un giveaway',
+  help: 'greroll <messageId>'
 };
 
 exports.run = async (bot, message, args, config) => {
@@ -94,8 +94,6 @@ if (publicStatut) {
     .setColor(config.color);
   return message.reply({embeds: [noacces], allowedMentions: { repliedUser: true }});
   }
-
-  if (!args[0]) return message.reply("Vous devez préciser l'ID du message");
 
 bot.giveawaysManager.reroll(args[0], {
   messages: {

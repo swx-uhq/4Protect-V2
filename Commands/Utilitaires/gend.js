@@ -3,9 +3,9 @@ const db = require('../../Events/loadDatabase');
 
 exports.help = {
   name: 'gend',
-  helpname: 'gend',
+  helpname: 'gend <messsageId>',
   description: 'Permet de mettre fin à un giveaway',
-  help: 'gend <id>'
+  help: 'gend <messageId>'
 };
 
 exports.run = async (bot, message, args, config) => {
@@ -95,8 +95,6 @@ if (publicStatut) {
     .setColor(config.color);
   return message.reply({embeds: [noacces], allowedMentions: { repliedUser: true }});
   }
-
-  if (!args[0]) return message.reply("Vous devez préciser l'ID du message");
 
 bot.giveawaysManager.end(args[0], null, {
   messages: {

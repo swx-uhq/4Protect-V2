@@ -4,7 +4,7 @@ const { EmbedBuilder } = require('discord.js');
 
 exports.help = {
   name: 'calc',
-  helpname: 'calc',
+  helpname: 'calc <calcul>',
   description: 'Permet de faires des calculs simples',
   help: 'calc <calcul> | multiplier = * | diviser = /'
 };

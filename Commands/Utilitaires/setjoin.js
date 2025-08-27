@@ -5,7 +5,7 @@ exports.help = {
   name: 'setjoin',
   helpname: 'setjoin <salon/off> <message>',
   description: 'Permet de configurer un message de bienvenue',
-  help: 'setjoin <salon/off> <message>',
+  help: 'setjoin <salon/off> <message>\nVoir la commande variable',
 };
 
 exports.run = async (bot, message, args, config) => {

@@ -98,7 +98,7 @@ if (publicStatut) {
   if (args[0] && args[0].toLowerCase() === 'clear') {
     db.run('DELETE FROM soutien WHERE guild = ?', [message.guild.id], (err) => {
       if (err) return message.reply("Une erreur est survenue lors du clear.");
-      return message.reply("Le système de soutien est désactivé.");
+      return message.reply("Le soutien est désactivé.");
     });
     return;
   }

@@ -123,7 +123,7 @@ if (publicStatut) {
             .setTitle(`Commande : ${command.help.name}`)
             .setDescription(command.help.description || "Aucune description")
             .addFields(
-              { name: 'Utilisation', value: `\`${config.prefix}${command.help.use}\`` },
+              { name: 'Utilisation', value: `\`${config.prefix}${command.help.help}\`` },
               { name: 'Alias', value: command.help.aliases ? command.help.aliases.join(', ') : 'Aucun' }
             )
             .setColor(config.color)
