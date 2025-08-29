@@ -1,5 +1,7 @@
 const db = require('../Events/loadDatabase');
 const spamMap = new Map();
+const config = require('../config.json');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
   name: 'messageCreate',
@@ -34,23 +36,32 @@ const al = async (message) => {
 
     if (row?.antilink) {
       const patern = /(?:https?|ftp):\/\/[^\s/$.?#].[^\s]*/gi;
-      const blword = /(discord\.gg\/[^\s]+|discord(app)?\.com\/invite\/[^\s]+)/i;
+      const bl = /(discord\.gg\/[^\s]+|discord(app)?\.com\/invite\/[^\s]+)/i;
+      const gifPattern = /\.(gif)$/i; 
+      const wldom = /(tenor\.com|giphy\.com)/i; 
 
       if (patern.test(message.content)) {
-        const isInvite = blword.test(message.content);
+        const links = message.content.match(patern) || [];
+        const isInvite = bl.test(message.content);
+        const isGif = links.some(link => gifPattern.test(link) || wldom.test(link));
 
-        if ((isInvite && row.type === 'invite') || row.type === 'all') {
+        if (isGif) return;
+
+          if ((isInvite && row.type === 'invite') || row.type === 'all') {
           message.delete().catch(console.error);
-          message.channel.send(`Vous n'avez pas le droit d'envoyer des liens <@${message.author.id}>.`).then(msg => {
+
+          const embed = new EmbedBuilder()
+            .setColor(config.color)
+            .setDescription(`Vous n'avez pas le droit d'envoyer des liens <@${message.author.id}>`)
+          message.channel.send({ embeds: [embed] }).then(msg => {
             setTimeout(() => {
               msg.delete().catch(console.error);
-            }, 1000);
+            }, 3000);
           }).catch(console.error);
 
           db.get('SELECT punition FROM punish WHERE guild = ? AND module = ?', [message.guild.id, 'antilink'], async (err, row) => {
             const sanction = row?.punition || 'timeout'; 
 
-            try {
               if (sanction === 'ban') {
                 await message.member.ban({ reason: 'Antilink' });
               } else if (sanction === 'kick') {
@@ -60,9 +71,7 @@ const al = async (message) => {
               } else {
                 await message.member.timeout?.(60000, 'Antilink');
               }
-            } catch (error) {
-              console.error('Erreur punition Antilink:', error);
-            }
+  
           });
         }
       }
