@@ -5,6 +5,7 @@ const config = require('../../config.json');
 exports.help = {
   name: 'modlog',
   help: 'modlog [off]',
+  helpname: 'modlog [off]',
   description: 'Active/désactive les logs de modération',
 }
   exports.run = async (client, message, args, config) => {

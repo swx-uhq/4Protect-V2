@@ -5,6 +5,7 @@ const config = require('../../config.json');
 exports.help = {
   name: 'raidlog',
   help: 'raidlog [off]',
+  helpname: 'raidlog [off]',
   description: 'Active/désactive les logs raid',
 }
   exports.run = async (client, message, args, config) => {

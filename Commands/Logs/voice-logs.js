@@ -5,6 +5,7 @@ const config = require('../../config.json');
 exports.help = {
   name: 'voicelog',
   help: 'voicelog [off]',
+  helpname: 'voicelog [off]',
   description: 'ACtive/désactive les logs vocals',
 }
   exports.run = async (client, message, args, config) => {

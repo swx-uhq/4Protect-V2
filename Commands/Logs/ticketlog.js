@@ -5,6 +5,7 @@ const config = require('../../config.json');
 exports.help = {
   name: 'ticketlog',
   help: 'ticketlog [off]',
+  helpname: 'ticketlog [off]',
   description: 'Active/désactive les logs ticket',
 }
   exports.run = async (client, message, args, config) => {

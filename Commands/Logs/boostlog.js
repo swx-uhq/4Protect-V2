@@ -5,6 +5,7 @@ const config = require('../../config.json');
 exports.help = {
   name: 'boostlog',
   help: 'boostlog [off]',
+  helpname: 'boostlog [off]',
   description: 'Active/désactive les logs boosts',
 }
   exports.run = async (client, message, args, config) => {

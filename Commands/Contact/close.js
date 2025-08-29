@@ -5,7 +5,7 @@ const sendLog = require('../../Events/sendlog');
 
 exports.help = {
   name: 'close',
-  helpname: 'close>',
+  helpname: 'close',
   description: 'Permet de close le ticket',
   help: 'close'
 };

@@ -5,6 +5,7 @@ const config = require('../../config.json');
 exports.help = {
   name: 'messagelog',
   help: 'messagelog [off]',
+  helpname: 'messagelog [off]',
   description: 'Active/désactive les logs messages',
 }
   exports.run = async (client, message, args, config) => {

@@ -5,6 +5,7 @@ const config = require('../../config.json');
 exports.help = {
   name: 'rolelog',
   help: 'rolelog [off]',
+  helpname: 'rolelog [off]',
   description: 'Active/désactive les logs rôle',
 }
   exports.run = async (client, message, args, config) => {

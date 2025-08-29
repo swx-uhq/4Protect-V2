@@ -6,7 +6,7 @@ const sendLog = require('../../Events/sendlog');
 
 exports.help = {
   name: 'rename',
-  helpname: 'rename <message>>',
+  helpname: 'rename <message>',
   description: 'Permet de renommer un ticket',
   help: 'rename <message>'
 };
