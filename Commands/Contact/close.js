@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const db = require('../../Events/loadDatabase');
 const config = require('../../config.json');
+const sendLog = require('../../Events/sendlog');
 
 exports.help = {
   name: 'close',
@@ -96,13 +97,22 @@ if (publicStatut) {
     .setColor(config.color);
   return message.reply({embeds: [noacces], allowedMentions: { repliedUser: true }});
   }
-    db.get('SELECT channelId FROM ticketchannel WHERE channelId = ?', [message.channel.id], async (err, row) => {
-    if (err) return console.error(err);
-    if (!row) return
+db.get('SELECT channelId FROM ticketchannel WHERE channelId = ?', [message.channel.id], async (err, row) => {
+  if (err) return console.error(err);
+  if (!row) return;
 
-    db.run('DELETE FROM ticketchannel WHERE channelId = ?', [message.channel.id], (err2) => {
-      if (err2) console.error(err2);
-    });
-    await message.channel.delete().catch(() => {});
+  const channelName = message.channel.name; 
+
+  db.run('DELETE FROM ticketchannel WHERE channelId = ?', [message.channel.id], (err2) => {
+    if (err2) console.error(err2);
   });
+
+  const embed = new Discord.EmbedBuilder()
+    .setColor(config.color)
+    .setDescription(`<@${message.author.id}> a fermé le ticket ${channelName}`)
+    .setTimestamp();
+
+  sendLog(message.guild, embed, 'ticketlog');
+    message.channel.delete().catch(() => {});
+});
 };

@@ -190,7 +190,7 @@ if (publicStatut) {
       channelsObj = {};
     }
 
-    channelsObj["📁・role-logs"] = finalChannel.id;
+    channelsObj["📁・voice-logs"] = finalChannel.id;
 
     db.run(
       `INSERT OR REPLACE INTO logs (guild, channels) VALUES (?, ?)`,

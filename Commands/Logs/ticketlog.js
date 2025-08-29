@@ -1,26 +1,15 @@
-const { ChannelType, PermissionFlagsBits } = require('discord.js');
+const { ChannelType, PermissionFlagsBits, MessageEmbed } = require('discord.js');
 const db = require('../../Events/loadDatabase');
 const config = require('../../config.json');
 
 exports.help = {
-  name: 'presetlogs',
-  helpname: 'presetlogs [off]',
-  description: "Active/désactive les logs prédéfinis",
-  help: 'presetlogs [off]',
-};
+  name: 'ticketlog',
+  help: 'ticketlog [off]',
+  description: 'Active/désactive les logs ticket',
+}
+  exports.run = async (client, message, args, config) => {
 
-const logChannels = [
-  "📁・boost-logs",
-  "📁・message-logs",
-  "📁・mod-logs",
-  "📁・raid-logs",
-  "📁・role-logs",
-  "📁・ticket-logs",
-  "📁・voice-logs"
-];
-
-exports.run = async (bot, message, args, config) => {
-  const checkPerm = async (message, commandName) => {
+    const checkPerm = async (message, commandName) => {
     if (config.owners.includes(message.author.id)) {
       return true;
     }
@@ -106,87 +95,109 @@ if (publicStatut) {
     .setColor(config.color);
   return message.reply({embeds: [noacces], allowedMentions: { repliedUser: true }});
   }
+  
+    const action = args[0]?.toLowerCase();
 
-    if (args[0]?.toLowerCase() === 'off') {
+  if (action === 'off') {
     let channelsObj = {};
     try {
       channelsObj = JSON.parse(
         await new Promise(res =>
-          db.get('SELECT channels FROM logs WHERE guild = ?', [message.guild.id], (e, r) => res(r?.channels || '{}'))
+          db.get(
+            'SELECT channels FROM logs WHERE guild = ?',
+            [message.guild.id],
+            (err, row) => res(row?.channels || '{}')
+          )
         )
       );
     } catch { channelsObj = {}; }
 
-    for (const name of logChannels) {
-      const channelId = channelsObj[name];
-      if (channelId) {
-        const channel = message.guild.channels.cache.get(channelId);
-        if (channel) await channel.delete().catch(() => {});
-      }
+    const channelId = channelsObj["📁・ticket-logs"];
+    if (channelId) {
+      const channel = message.guild.channels.cache.get(channelId);
+      if (channel) await channel.delete().catch(() => {});
+      delete channelsObj["📁・ticket-logs"];
+      db.run(
+        `INSERT OR REPLACE INTO logs (guild, channels) VALUES (?, ?)`,
+        [message.guild.id, JSON.stringify(channelsObj)]
+      );
+      return message.reply("Les logs boosts sont désactivé.");
+    } else {
+      return message.reply("Pas de logs des boosts configuré.");
+    }
+  }
+
+    let logsCategory = message.guild.channels.cache.find(
+      c => c.type === ChannelType.GuildCategory && c.name.toLowerCase() === 'logs'
+    );
+
+    if (!logsCategory) {
+      logsCategory = await message.guild.channels.create({
+        name: 'Logs',
+        type: ChannelType.GuildCategory,
+        permissionOverwrites: [
+          {
+            id: message.guild.roles.everyone,
+            deny: [PermissionFlagsBits.ViewChannel],
+          },
+          {
+            id: message.guild.ownerId,
+            allow: [PermissionFlagsBits.ViewChannel],
+          },
+        ],
+      });
     }
 
-    db.run('DELETE FROM logs WHERE guild = ?', [message.guild.id]);
-    return message.reply("Tous les salons de logs ont été supprimés");
-  }
+    const newChannel = message.mentions.channels.first() ||
+      message.guild.channels.cache.get(args[0]) ||
+      message.channel;
 
-     let logsCategory = message.guild.channels.cache.find(
-    c => c.type === ChannelType.GuildCategory && c.name.toLowerCase() === 'logs'
-  );
+    if (!newChannel) {
+      return message.reply("Salon invalide");
+    }
 
-  if (!logsCategory) {
-    logsCategory = await message.guild.channels.create({
-      name: 'Logs',
-      type: ChannelType.GuildCategory,
-      permissionOverwrites: [
-        {
-          id: message.guild.roles.everyone,
-          deny: [PermissionFlagsBits.ViewChannel]
-        },
-        {
-          id: message.guild.ownerId,
-          allow: [PermissionFlagsBits.ViewChannel]
-        }
-      ]
-    });
-  }
-
-  let channelsObj = {};
-  try {
-    channelsObj = JSON.parse(
-      await new Promise(res =>
-        db.get('SELECT channels FROM logs WHERE guild = ?', [message.guild.id], (e, r) => res(r?.channels || '{}'))
-      )
-    );
-  } catch { channelsObj = {}; }
-
-  for (const name of logChannels) {
-    let channel = message.guild.channels.cache.find(
-      c => c.name === name && c.parentId === logsCategory.id
-    );
-    if (!channel) {
-      channel = await message.guild.channels.create({
-        name: name,
+    let finalChannel = newChannel;
+    if (newChannel.parentId !== logsCategory.id) {
+      finalChannel = await message.guild.channels.create({
+        name: "📁・ticket-logs",
         type: ChannelType.GuildText,
         parent: logsCategory.id,
         permissionOverwrites: [
           {
             id: message.guild.roles.everyone,
-            deny: [PermissionFlagsBits.ViewChannel]
+            deny: [PermissionFlagsBits.ViewChannel],
           },
           {
             id: message.guild.ownerId,
-            allow: [PermissionFlagsBits.ViewChannel]
-          }
-        ]
+            allow: [PermissionFlagsBits.ViewChannel],
+          },
+        ],
       });
     }
-    channelsObj[name] = channel.id;
+
+    let channelsObj = {};
+    try {
+      channelsObj = JSON.parse(
+        await new Promise(res =>
+          db.get(
+            'SELECT channels FROM logs WHERE guild = ?',
+            [message.guild.id],
+            (err, row) => res(row?.channels || '{}')
+          )
+        )
+      );
+    } catch {
+      channelsObj = {};
+    }
+
+    channelsObj["📁・ticket-logs"] = finalChannel.id;
+
+    db.run(
+      `INSERT OR REPLACE INTO logs (guild, channels) VALUES (?, ?)`,
+      [message.guild.id, JSON.stringify(channelsObj)]
+    );
+
+    await message.reply(`<#${finalChannel.id}>`);
+
+     
   }
-
-  db.run(
-    `INSERT OR REPLACE INTO logs (guild, channels) VALUES (?, ?)`,
-    [message.guild.id, JSON.stringify(channelsObj)]
-  );
-
-  return message.reply("Les salons de logs ont été créés.");
-};

@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const db = require('../../Events/loadDatabase');
 const config = require('../../config.json');
+const sendLog = require('../../Events/sendlog');
 
 exports.help = {
   name: 'add',
@@ -98,16 +99,17 @@ if (publicStatut) {
   }
   const userArg = args[0];
   const user = message.mentions.users.first() || await bot.users.fetch(userArg).catch(() => null);
-  if (!user) {
-    return
-  }
+if (!user) return;
 
-  const channel = message.channel;
-  channel.permissionOverwrites.edit(user, { ViewChannel: true })
-    .then(() => {
-      message.reply(`${user} a été ajouté au ticket`);
-    })
-    .catch(error => {
-      message.reply("Une erreur s'est produite lors de l'ajout de l'utilisateur au salon.");
-    });
+const channel = message.channel;
+await channel.permissionOverwrites.edit(user.id, { ViewChannel: true });
+
+message.reply(`${user} a été ajouté au ticket`);
+
+const embed = new Discord.EmbedBuilder()
+  .setColor(config.color)
+  .setDescription(`<@${message.author.id}> a ajouté <@${user.id}> au salon ${channel.name}`)
+  .setTimestamp();
+
+sendLog(message.guild, embed, 'ticketlog');
 };

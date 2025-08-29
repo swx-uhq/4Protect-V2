@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const db = require('../../Events/loadDatabase');
 const config = require('../../config.json');
+const sendLog = require('../../Events/sendlog');
 
 exports.help = {
   name: 'remove',
@@ -97,20 +98,20 @@ if (publicStatut) {
   return message.reply({embeds: [noacces], allowedMentions: { repliedUser: true }});
   }
 
-    if (!message.channel.name.toLowerCase().startsWith("ticket-")) {
-    return
-  }
   const userArg = args[0];
   const user = message.mentions.users.first() || await bot.users.fetch(userArg).catch(() => null);
-  if (!user) {
-    return
+if (!user) return;
+
+const channel = message.channel;
+channel.permissionOverwrites.edit(user.id, { ViewChannel: false }) 
+  .then(() => {
+    message.reply(`${user} a été enlevé du ticket`);
+
+    const embed = new Discord.EmbedBuilder()
+      .setColor(config.color)
+      .setDescription(`<@${message.author.id}> a remove <@${user.id}> du salon ${channel.name}`)
+      .setTimestamp();
+
+    sendLog(message.guild, embed, 'ticketlog');
   }
-  const channel = message.channel;
-  channel.permissionOverwrites.edit(user, { ViewChannel: null })
-    .then(() => {
-      message.reply(`${user} a été enlevé du ticket`);
-    })
-    .catch(error => {
-      message.reply("Une erreur s'est produite lors du retrait de l'utilisateur du salon.");
-    });
-};
+  )}

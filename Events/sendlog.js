@@ -6,7 +6,8 @@ const types = {
   messagelog: '📁・message-logs',
   raidlog: '📁・raid-logs',
   rolelog: '📁・role-logs',
-  voicelog: '📁・voice-logs'
+  voicelog: '📁・voice-logs',
+  ticketlog: '📁・ticket-logs'
 };
 
 async function sendLog(guild, embed, type = 'modlog') {
