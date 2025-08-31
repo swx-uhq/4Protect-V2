@@ -106,7 +106,7 @@ if (publicStatut) {
   try {
   await db.run(
     `INSERT INTO radio (guild, url) VALUES (?, ?)
-     ON CONFLICT(guild_id) DO UPDATE SET url = excluded.url`,
+     ON CONFLICT(guild) DO UPDATE SET url = excluded.url`,
     [message.guild.id, url]
   );
 
