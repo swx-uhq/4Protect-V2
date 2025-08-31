@@ -104,11 +104,11 @@ if (publicStatut) {
   }
 
   try {
-    await db.query('INSERT INTO radio (guild_id, url) VALUES (?, ?) ON DUPLICATE KEY UPDATE url = ?', [
-      message.guild.id,
-      url,
-      url
-    ]);
+  await db.run(
+    `INSERT INTO radio (guild_id, url) VALUES (?, ?)
+     ON CONFLICT(guild_id) DO UPDATE SET url = excluded.url`,
+    [message.guild.id, url]
+  );
 
     const embed = new Discord.EmbedBuilder()
       .setColor(config.color)
