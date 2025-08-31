@@ -12,8 +12,7 @@ const categories = [
   'Logs',
   'Contact',
   'Paramètres',
-  'Informations',
-  'Radio'
+  'Informations'
 ];
 
 exports.help = {
