@@ -1,13 +1,13 @@
 const Discord = require('discord.js');
 const db = require('../../Events/loadDatabase');
 const config = require('../../config.json');
+const { joinVoiceChannel } = require('@discordjs/voice');
 const { EmbedBuilder } = require('discord.js')
 
 exports.help = {
-  name: 'nom',
-  helpname: 'nom <x/x> [x/x] - texte dans le +help',
-  aliases: ['nom alternatif', 'nom alternatif 2'],
-  description: 'description',
+  name: 'join',
+  helpname: 'join <channelId>',
+  description: 'Permet au bot de rejoindre un salon vocal',
   help: 'desc du +help <commande>'
 };
 
@@ -98,5 +98,23 @@ if (publicStatut) {
     .setColor(config.color);
   return message.reply({embeds: [noacces], allowedMentions: { repliedUser: true }});
   }
-  
+
+  const channelId = args[0];
+  const voiceChannel = message.guild.channels.cache.get(channelId);
+
+  try {
+    await joinVoiceChannel({
+  channelId: voiceChannel.id,
+  guildId: message.guild.id,
+  adapterCreator: message.guild.voiceAdapterCreator
+});
+    
+    const embed = new Discord.EmbedBuilder()
+      .setColor(config.color)
+      .setDescription(`J'ai rejoint le salon vocal ${voiceChannel.name}`);
+    return message.reply({ embeds: [embed] });
+  } catch (error) {
+    console.error(error);
+    return
+  }
 };

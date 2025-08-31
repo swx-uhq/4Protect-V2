@@ -4,11 +4,10 @@ const config = require('../../config.json');
 const { EmbedBuilder } = require('discord.js')
 
 exports.help = {
-  name: 'nom',
-  helpname: 'nom <x/x> [x/x] - texte dans le +help',
-  aliases: ['nom alternatif', 'nom alternatif 2'],
-  description: 'description',
-  help: 'desc du +help <commande>'
+  name: 'setflux',
+  helpname: 'setflux <url>',
+  description: 'Permet de configurer la radio',
+  help: 'setflux '
 };
 
 exports.run = async (bot, message, args, config) => {
@@ -97,6 +96,27 @@ if (publicStatut) {
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande.")
     .setColor(config.color);
   return message.reply({embeds: [noacces], allowedMentions: { repliedUser: true }});
+  }
+
+  const url = args[0];
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    return 
+  }
+
+  try {
+    await db.query('INSERT INTO radio (guild_id, url) VALUES (?, ?) ON DUPLICATE KEY UPDATE url = ?', [
+      message.guild.id,
+      url,
+      url
+    ]);
+
+    const embed = new Discord.EmbedBuilder()
+      .setColor(config.color)
+      .setDescription(`Le flux radio est configuré sur ${url}`);
+    return message.reply({ embeds: [embed] });
+  } catch (error) {
+    console.error(error);
+    return
   }
   
 };

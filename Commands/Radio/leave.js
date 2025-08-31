@@ -1,13 +1,13 @@
 const Discord = require('discord.js');
 const db = require('../../Events/loadDatabase');
 const config = require('../../config.json');
+const { getVoiceConnection } = require('@discordjs/voice');
 const { EmbedBuilder } = require('discord.js')
 
 exports.help = {
-  name: 'nom',
-  helpname: 'nom <x/x> [x/x] - texte dans le +help',
-  aliases: ['nom alternatif', 'nom alternatif 2'],
-  description: 'description',
+  name: 'leave',
+  helpname: 'leave',
+  description: 'Permet au bot de quitter un salon vocal',
   help: 'desc du +help <commande>'
 };
 
@@ -98,5 +98,24 @@ if (publicStatut) {
     .setColor(config.color);
   return message.reply({embeds: [noacces], allowedMentions: { repliedUser: true }});
   }
-  
+  const connection = getVoiceConnection(message.guild.id);
+if (!connection) {
+  const novc = new EmbedBuilder()
+    .setDescription("Je ne suis pas dans un salon vocal")
+    .setColor(config.color);
+  return message.reply({ embeds: [novc], allowedMentions: { repliedUser: true } });
+}
+
+
+  try {
+    connection.destroy();
+    
+    const embed = new Discord.EmbedBuilder()
+      .setColor(config.color)
+      .setDescription('J\'ai quitté le salon vocal.');
+    return message.reply({ embeds: [embed] });
+  } catch (error) {
+    console.error(error);
+    return 
+  }
 };
