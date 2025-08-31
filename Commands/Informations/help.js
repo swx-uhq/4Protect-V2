@@ -12,14 +12,15 @@ const categories = [
   'Logs',
   'Contact',
   'Paramètres',
-  'Informations'
+  'Informations',
+  'Radio'
 ];
 
 exports.help = {
   name: 'help',
-  helpname: 'help [commande]',
+  helpname: 'help',
   description: "Permet d'afficher la liste des commandes",
-  help: 'help <commande>',
+  help: 'help',
 };
 
 exports.run = async (bot, message, args) => {
