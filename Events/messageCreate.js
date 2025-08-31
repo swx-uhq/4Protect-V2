@@ -118,46 +118,74 @@ const al = async (message) => {
 
 
 const antispam = async (message) => {
+  const checkbypass = await bypass(message.author.id);
+  if (checkbypass) return;
 
-  if (await bypass(message.author.id)) return;
-  db.get('SELECT antispam, nombremessage, sous, timeout FROM antiraid WHERE guild = ?', [message.guild.id], async (err, row) => {
-    if (err || !row?.antispam) return;
-
-    const count = row.nombremessage || 3;
-    const sous = row.sous || 10000; 
-    const timeoutMs = row.timeout || 60000;  
-    const now = Date.now();
-    if (!spamMap.has(message.guild.id)) spamMap.set(message.guild.id, new Map());
-    const guildSpam = spamMap.get(message.guild.id);
-
-    const userTimestamps = guildSpam.get(message.author.id) || [];
-    const recent = userTimestamps.filter(ts => now - ts < sous);
-    recent.push(now);
-    guildSpam.set(message.author.id, recent);
-
-    if (recent.length >= count) {
-      try {
-        await message.member.timeout?.(timeoutMs, 'Antispam');
-        message.channel.send(`<@${message.author.id}> a été timeout pour spam.`);
-      } catch (e) {
-        message.channel.send(`Impossible de timeout <@${message.author.id}>.`);
+  db.get(
+    'SELECT antispam, nombremessage, sous, timeout FROM antiraid WHERE guild = ?',
+    [message.guild.id],
+    async (err, row) => {
+      if (err) {
+        console.error(err);
+        return;
       }
-      guildSpam.set(message.author.id, []);
-    }
-  db.get('SELECT punition FROM punish WHERE guild = ? AND module = ?', [message.guild.id, 'antispam'], async (err, row) => {
-  const sanction = row?.punition || 'timeout'; 
+      if (!row?.antispam) {
+        return;
+      }
+      const count = row.nombremessage;
+      const sous = row.sous;
+      const timeoutMs = row.timeout ;
 
-  if (sanction === 'ban') {
-    await message.member.ban({ reason: 'Antispam' });
-  } else if (sanction === 'kick') {
-    await message.member.kick('Antispam');
-  } else if (sanction === 'derank') {
-    await message.member.roles.set([], 'Antispam');
-  } else {
-    await message.member.timeout?.(60000, 'Antispam');
-  }
-});
-  })
+      const now = Date.now();
+      if (!spamMap.has(message.guild.id)) {
+        spamMap.set(message.guild.id, new Map());
+      }
+      const guildSpam = spamMap.get(message.guild.id);
+
+      let userTimestamps = guildSpam.get(message.author.id) || [];
+      userTimestamps = userTimestamps.filter(ts => now - ts < sous);
+      userTimestamps.push(now);
+      guildSpam.set(message.author.id, userTimestamps);
+
+      if (userTimestamps.length >= count) {
+        try {
+          db.get(
+            'SELECT punition FROM punish WHERE guild = ? AND module = ?',
+            [message.guild.id, 'antispam'],
+            async (err, punishRow) => {
+              if (err) {
+                console.error(err);
+                return;
+              }
+              const sanction = punishRow?.punition || 'timeout';
+              try {
+                if (sanction === 'ban') {
+                  await message.member.ban({ reason: 'Antispam' });
+                  message.channel.send(`<@${message.author.id}> a été banni pour spam.`);
+                } else if (sanction === 'kick') {
+                  await message.member.kick('Antispam');
+                  message.channel.send(`<@${message.author.id}> a été kick pour spam.`);
+                } else if (sanction === 'derank') {
+                  await message.member.roles.set([], 'Antispam');
+                  message.channel.send(`<@${message.author.id}> a été dérank pour spam.`);
+                } else {
+                  await message.member.timeout(timeoutMs, 'Antispam');
+                  message.channel.send(`<@${message.author.id}> a été timeout pour spam.`);
+                }
+                guildSpam.set(message.author.id, []);
+              }
+
+catch (e) {
+                console.error(e);
+              }
+            }
+          );
+        } catch (e) {
+         -console.error(e);
+        }
+      }
+    }
+  );
 };
 
 const handleCommands = async (message, bot, config) => {

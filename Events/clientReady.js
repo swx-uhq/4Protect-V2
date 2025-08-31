@@ -1,7 +1,7 @@
 const { ActivityType } = require('discord.js');
 
 module.exports = {
-  name: 'ready',
+  name: 'clientReady',
   async execute(bot) {
     await bot.application.commands.set(bot.arrayOfSlashCommands);
 
