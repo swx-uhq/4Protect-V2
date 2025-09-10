@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const db = require('../../Events/loadDatabase');
 const config = require('../../config.json');
 const sendLog = require('../../Events/sendlog');
@@ -112,4 +112,5 @@ const embed = new Discord.EmbedBuilder()
   .setTimestamp();
 
 sendLog(message.guild, embed, 'ticketlog');
+
 };
