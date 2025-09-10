@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const db = require('../../Events/loadDatabase');
 const { formatDistanceToNow, parseISO, isToday, isYesterday } = require('date-fns');
 const { fr } = require('date-fns/locale');
