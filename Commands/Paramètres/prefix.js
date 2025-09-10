@@ -1,7 +1,7 @@
-const Discord = require('discord.js');
 const fs = require('fs');
 const db = require('../../Events/loadDatabase');
 const config = require('../../config.json');
+const { EmbedBuilder } = require('discord.js');
 
 exports.help = {
   name: 'prefix',
