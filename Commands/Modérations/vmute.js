@@ -1,7 +1,8 @@
-const Discord = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const db = require('../../Events/loadDatabase');
-const ms = require('ms'); 
+const config = require('../../config.json');
 const sendLog = require('../../Events/sendlog');
+const ms = require('ms'); 
 
 exports.help = {
   name: 'vmute',
