@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const config = require('../../config.json');
 const { EmbedBuilder } = require('discord.js');
+const Discord = require('discord.js');
 
 exports.help = {
   name: 'setcommand',

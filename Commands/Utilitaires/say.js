@@ -1,5 +1,6 @@
 const db = require('../../Events/loadDatabase');
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
+const Discord = require('discord.js');
 
 exports.help = {
   name: 'say',

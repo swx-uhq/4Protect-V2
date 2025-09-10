@@ -1,6 +1,7 @@
 const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 const config = require('../../config.json');
 const db = require('../../Events/loadDatabase');
+const Discord = require('discord.js');
 
 exports.help = {
   name: 'pic',

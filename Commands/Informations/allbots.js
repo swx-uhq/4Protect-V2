@@ -1,6 +1,7 @@
 const { EmbedBuilder } = require('discord.js');
 const db = require('../../Events/loadDatabase');
 const config = require('../../config.json');
+const Discord = require('discord.js');
 
 exports.help = {
   name: 'allbots',

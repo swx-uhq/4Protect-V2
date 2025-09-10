@@ -3,6 +3,7 @@ const db = require('../../Events/loadDatabase');
 const config = require('../../config.json');
 const sendLog = require('../../Events/sendlog');
 const ms = require('ms'); 
+const Discord = require('discord.js');
 
 exports.help = {
   name: 'vmute',

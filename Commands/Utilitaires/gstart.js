@@ -2,6 +2,7 @@ const { EmbedBuilder, Invite } = require('discord.js');
 const db = require('../../Events/loadDatabase');
 const config = require('../../config.json');
 const ms = require('ms');
+const Discord = require('discord.js');
 
 exports.help = {
   name: 'gstart',

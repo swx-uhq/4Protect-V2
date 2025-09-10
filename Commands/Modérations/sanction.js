@@ -3,10 +3,10 @@ const db = require('../../Events/loadDatabase');
 const { formatDistanceToNow, parseISO, isToday, isYesterday } = require('date-fns');
 const { fr } = require('date-fns/locale');
 const config = require('../../config.json');
+const Discord = require('discord.js');
+const sancparpage = 5;
 
-const ITEMS_PER_PAGE = 5;
-
-const generateFooterDate = (date) => {
+const footdate = (date) => {
   const now = new Date();
   const parsedDate = parseISO(date);
 
@@ -125,7 +125,7 @@ if (publicStatut) {
 
     if (rows.length === 0) return message.reply(`${user.tag} n'a aucune sanction.`);
 
-    const totalPages = Math.ceil(rows.length / ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(rows.length / sancparpage);
     let currentPage = 1;
 
     const generateEmbed = (page) => {
@@ -134,8 +134,8 @@ if (publicStatut) {
         .setColor(config.color)
         .setFooter({ text: `Page ${page} sur ${totalPages}` });
 
-      const start = (page - 1) * ITEMS_PER_PAGE;
-      const end = Math.min(start + ITEMS_PER_PAGE, rows.length);
+      const start = (page - 1) * sancparpage;
+      const end = Math.min(start + sancparpage, rows.length);
 
       for (let i = start; i < end; i++) {
         embed.addFields({

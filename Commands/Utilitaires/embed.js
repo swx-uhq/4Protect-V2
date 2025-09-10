@@ -1,5 +1,6 @@
 const {ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, EmbedBuilder, ComponentType} = require('discord.js');
 const db = require('../../Events/loadDatabase');
+const Discord = require('discord.js');
 const config = require('../../config.json');
 
 exports.help = {
