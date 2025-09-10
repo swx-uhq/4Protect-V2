@@ -125,7 +125,7 @@ if (publicStatut) {
             .setDescription(command.help.description || "Aucune description")
             .addFields(
               { name: 'Utilisation', value: `\`${config.prefix}${command.help.help}\`` },
-              { name: 'Alias', value: command.help.aliases ? command.help.aliases.join(', ') : 'Aucun' }
+              { name: 'Alias', value: command.help.aliases ? command.help.aliases.join(', ') : '  ' }
             )
             .setColor(config.color)
             .setFooter({ text: "4Protect V2" });
@@ -138,9 +138,8 @@ if (publicStatut) {
     }
     if (!cmdchec) {
       const notFoundEmbed = new EmbedBuilder()
-        .setTitle('Erreur')
         .setDescription(`La commande \`${args[0]}\` n'existe pas.`)
-        .setColor('#6495ED')
+        .setColor(config.color)
         .setFooter({ text: "4Protect V2" });
       await message.reply({ embeds: [notFoundEmbed], allowedMentions: { repliedUser: false } });
     }
@@ -162,7 +161,7 @@ for (let i = 0; i < categories.length; i++) {
 
       const checkhelpPerm = await checkPerm(message, cmd.help.name);
       if (checkhelpPerm) {
-        commands.push(`\`${config.prefix}${cmd.help.helpname || cmd.help.name}\` : ${cmd.help.description || 'Aucune description'}`);
+        commands.push(`\`${config.prefix}${cmd.help.helpname || cmd.help.name}\` : ${cmd.help.description || '  '}`);
       }
     }
   }
@@ -180,10 +179,7 @@ for (let i = 0; i < categories.length; i++) {
 }
 
   if (catagor.length === 0) {
-  return message.reply({
-    content: "Vous n'avez accès à aucune commande.",
-    allowedMentions: { repliedUser: false }
-  });
+  return
 }
 
 const selectMenu = new ActionRowBuilder()
