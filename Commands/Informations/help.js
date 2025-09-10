@@ -112,11 +112,11 @@ if (publicStatut) {
   }
 
   if (args[0]) {
-    let commandFound = false;
+    let cmdchec = false;
     for (const category of categories) {
-      const categoryPath = path.join(__dirname, `../../Commands/${category}`);
-      if (!fs.existsSync(categoryPath)) continue;
-      const commandFiles = fs.readdirSync(categoryPath).filter(file => file.endsWith('.js'));
+      const cpath = path.join(__dirname, `../../Commands/${category}`);
+      if (!fs.existsSync(cpath)) continue;
+      const commandFiles = fs.readdirSync(cpath).filter(file => file.endsWith('.js'));
       for (const file of commandFiles) {
         const command = require(`../../Commands/${category}/${file}`);
         if (command.help.name === args[0] || (command.help.aliases && command.help.aliases.includes(args[0]))) {
@@ -130,13 +130,13 @@ if (publicStatut) {
             .setColor(config.color)
             .setFooter({ text: "4Protect V2" });
           await message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
-          commandFound = true;
+          cmdchec = true;
           break;
         }
       }
-      if (commandFound) break;
+      if (cmdchec) break;
     }
-    if (!commandFound) {
+    if (!cmdchec) {
       const notFoundEmbed = new EmbedBuilder()
         .setTitle('Erreur')
         .setDescription(`La commande \`${args[0]}\` n'existe pas.`)
@@ -147,48 +147,72 @@ if (publicStatut) {
     return;
   }
 
-  const embeds = categories.map(category => {
-    const categoryPath = path.join(__dirname, `../../Commands/${category}`);
-    let commands = [];
-    if (fs.existsSync(categoryPath)) {
-      commands = fs.readdirSync(categoryPath)
-        .filter(file => file.endsWith('.js'))
-        .map(file => {
-          const cmd = require(`../../Commands/${category}/${file}`);
-          return `\`${config.prefix}${cmd.help.helpname || cmd.help.name}\` : ${cmd.help.description || 'Aucune description'}`;
-        });
+  const catagor = [];
+
+for (let i = 0; i < categories.length; i++) {
+  const category = categories[i];
+  const cpath = path.join(__dirname, `../../Commands/${category}`);
+  let commands = [];
+
+  if (fs.existsSync(cpath)) {
+    const commandFiles = fs.readdirSync(cpath).filter(file => file.endsWith('.js'));
+
+    for (const file of commandFiles) {
+      const cmd = require(`../../Commands/${category}/${file}`);
+
+      const checkhelpPerm = await checkPerm(message, cmd.help.name);
+      if (checkhelpPerm) {
+        commands.push(`\`${config.prefix}${cmd.help.helpname || cmd.help.name}\` : ${cmd.help.description || 'Aucune description'}`);
+      }
     }
-    return new EmbedBuilder()
-      .setTitle(`${category}`)
-      .setDescription(`Pour avoir de l’aide sur une commande, utilisez \`${config.prefix}help <commande>\`\n\n${commands.join('\n')}`)
-      .setColor(config.color)
-      .setFooter({ text: "4Protect V2" });
+  }
+
+  if (commands.length > 0) {
+    catagor.push({
+      name: category,
+      embed: new EmbedBuilder()
+        .setTitle(`${category}`)
+        .setDescription(`Pour avoir de l’aide sur une commande, utilisez \`${config.prefix}help <commande>\`\n\n${commands.join('\n')}`)
+        .setColor(config.color)
+        .setFooter({ text: "4Protect V2" })
+    });
+  }
+}
+
+  if (catagor.length === 0) {
+  return message.reply({
+    content: "Vous n'avez accès à aucune commande.",
+    allowedMentions: { repliedUser: false }
   });
+}
 
-  const selectMenu = new ActionRowBuilder()
-    .addComponents(
-      new StringSelectMenuBuilder()
-        .setCustomId('categorySelect')
-        .setPlaceholder('Choisis une catégorie')
-        .addOptions(categories.map((category, index) => ({
-          label: category,
-          value: `category_${index}`,
-        })))
-    );
+const selectMenu = new ActionRowBuilder()
+  .addComponents(
+    new StringSelectMenuBuilder()
+      .setCustomId('categorySelect')
+      .setPlaceholder('Choisis une catégorie')
+      .addOptions(catagor.map((cat, index) => ({
+        label: cat.name,
+        value: `category_${index}`,
+      })))
+  );
 
-  const msg = await message.reply({ embeds: [embeds[0]], components: [selectMenu], allowedMentions: { repliedUser: false } });
+const msg = await message.reply({
+  embeds: [catagor[0].embed],
+  components: [selectMenu],
+  allowedMentions: { repliedUser: false }
+});
+    const filter = i => i.user.id === message.author.id;
+const collector = msg.createMessageComponentCollector({ filter, time: 60000 });
 
-  const filter = i => i.user.id === message.author.id;
-  const collector = msg.createMessageComponentCollector({ filter, time: 60000 });
+collector.on('collect', async i => {
+  if (i.customId === 'categorySelect') {
+    const selectedIndex = parseInt(i.values[0].split('_')[1], 10);
+    await i.update({ embeds: [catagor[selectedIndex].embed], components: [selectMenu] });
+  }
+});
 
-  collector.on('collect', async i => {
-    if (i.customId === 'categorySelect') {
-      const selectedCategoryIndex = parseInt(i.values[0].split('_')[1], 10);
-      await i.update({ embeds: [embeds[selectedCategoryIndex]], components: [selectMenu] });
-    }
-  });
-
-  collector.on('end', () => {
-    msg.edit({ components: [] });
-  });
-};
+collector.on('end', () => {
+  msg.edit({ components: [] }).catch(() => {});
+});
+}
