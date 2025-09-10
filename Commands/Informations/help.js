@@ -159,7 +159,7 @@ if (publicStatut) {
     }
     return new EmbedBuilder()
       .setTitle(`${category}`)
-      .setDescription(`Pour avoir de l’aide sur une commande, utilisez \`${config.prefix}help <commande>\`\n\n${commands.join('\n') || "C'est vide par ici..."}`)
+      .setDescription(`Pour avoir de l’aide sur une commande, utilisez \`${config.prefix}help <commande>\`\n\n${commands.join('\n')}`)
       .setColor(config.color)
       .setFooter({ text: "4Protect V2" });
   });
