@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 const config = require('../../config.json');
 const db = require('../../Events/loadDatabase'); 
 
