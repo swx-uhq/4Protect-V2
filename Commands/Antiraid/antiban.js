@@ -1,5 +1,6 @@
-const db = require('../../Events/loadDatabase');
+const { EmbedBuilder } = require('discord.js');
 const config = require('../../config.json');
+const db = require('../../Events/loadDatabase');
 
 exports.help = {
   name: 'antiban',
@@ -108,4 +109,5 @@ if (publicStatut) {
         "L'antiban a bien été désactivé.";
       message.reply(response);
     });
+
 };
