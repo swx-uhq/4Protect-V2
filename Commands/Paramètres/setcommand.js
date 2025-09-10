@@ -174,5 +174,6 @@ for (const permLevel of permLevels) {
     );
   }
 }
+                message.reply(`La/Les commande \`${commands.join(', ')}\` a/ont été ajouté à/aux permission \`${permLevels.join(', ')}\`.`);
 }
 
