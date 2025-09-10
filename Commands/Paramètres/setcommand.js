@@ -2,6 +2,7 @@ const db = require('../../Events/loadDatabase');
 const fs = require('fs');
 const path = require('path');
 const config = require('../../config.json');
+const { EmbedBuilder } = require('discord.js');
 
 exports.help = {
   name: 'setcommand',
