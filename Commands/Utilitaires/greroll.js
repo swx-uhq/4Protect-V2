@@ -1,4 +1,6 @@
-const { EmbedBuilder, PermissionsBitField } = require('discord.js');
+const Discord = require('discord.js');
+const db = require('../../Events/loadDatabase');
+const { EmbedBuilder } = require('discord.js');
 
 exports.help = {
   name: 'greroll',
@@ -101,4 +103,5 @@ bot.giveawaysManager.reroll(args[0], {
     error: 'Il n\'y a pas assez de participants'
   }
 })
+
 };
