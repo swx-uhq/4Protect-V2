@@ -1,4 +1,6 @@
+const Discord = require('discord.js');
 const db = require('../../Events/loadDatabase');
+const { EmbedBuilder } = require('discord.js');
 
 exports.help = {
   name: 'emoji',
