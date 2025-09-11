@@ -98,9 +98,11 @@ if (publicStatut) {
     .setColor(config.color);
   return message.reply({embeds: [noacces], allowedMentions: { repliedUser: true }});
   }
+    const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+
     const role = message.mentions.roles.first() || message.guild.roles.cache.get(args[1]);
   if (!role) {
-    return message.reply("Le rôle n'existe pas.");
+    return 
   }
 
   if (message.member.roles.highest.position <= role.position) {
@@ -109,7 +111,7 @@ if (publicStatut) {
 
   try {
     await member.roles.add(role);
-    message.reply(`Le rôle ${role} a été ajouté à <@${member.id}>.`);
+    message.reply(`Le rôle a été ajouté à <@${member.id}>.`);
 
         const embed = new Discord.EmbedBuilder()
       .setColor(config.color)
@@ -118,7 +120,7 @@ if (publicStatut) {
 
     sendLog(message.guild, embed, 'rolelog');
   } catch (error) {
-    console.error('Erreur lors de l\'ajout du rôle :', error);
-    return message.reply("Impossible d'ajouter le rôle.");
+    console.error(error);
+    return 
   }
 };
