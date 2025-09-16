@@ -121,7 +121,7 @@ if (publicStatut) {
         const command = require(`../../Commands/${category}/${file}`);
         if (command.help.name === args[0] || (command.help.aliases && command.help.aliases.includes(args[0]))) {
           const embed = new EmbedBuilder()
-            .setTitle(`Commande : ${command.help.name}`)
+            .setTitle(`${command.help.name}`)
             .setDescription(command.help.description || "Aucune description")
             .addFields(
               { name: 'Utilisation', value: `\`${config.prefix}${command.help.help}\`` },
