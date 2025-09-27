@@ -161,7 +161,8 @@ for (let i = 0; i < categories.length; i++) {
 
       const checkhelpPerm = await checkPerm(message, cmd.help.name);
       if (checkhelpPerm) {
-        commands.push(`\`${config.prefix}${cmd.help.helpname || cmd.help.name}\` : ${cmd.help.description || '  '}`);
+        commands.push(`**\`${config.prefix}${cmd.help.helpname || cmd.help.name}\`**\n${cmd.help.description || ' '}`);
+
       }
     }
   }
@@ -171,7 +172,7 @@ for (let i = 0; i < categories.length; i++) {
       name: category,
       embed: new EmbedBuilder()
         .setTitle(`${category}`)
-        .setDescription(`Pour avoir de l’aide sur une commande, utilisez \`${config.prefix}help <commande>\`\n\n${commands.join('\n')}`)
+        .setDescription(`Pour avoir de l’aide sur une commande, utilisez \`${config.prefix}help <commande>\`\nLes paramètres entre \`<...>\` sont obligatoires tandis que ceux entre \`[...]\` sont facultatifs\n\n${commands.join('\n\n')}`)
         .setColor(config.color)
         .setFooter({ text: "4Protect V2" })
     });
