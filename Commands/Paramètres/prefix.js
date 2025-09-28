@@ -7,6 +7,7 @@ const Discord = require('discord.js');
 exports.help = {
   name: 'prefix',
   helpname: 'prefix',
+  description: "Permet de changer le préfixe",
   help: 'prefix [prefix]]',
 };
 
