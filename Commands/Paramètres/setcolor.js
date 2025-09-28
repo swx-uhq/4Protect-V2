@@ -5,8 +5,9 @@ const config = require('../../config.json');
 const Discord = require('discord.js');
 
 exports.help = {
-  name: 'color',
+  name: 'setcolor',
   helpname: 'color',
+  description: "Permet de changer la couleur des embed",
   help: 'color [#hex]',
 };
 
