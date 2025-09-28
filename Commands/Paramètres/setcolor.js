@@ -6,9 +6,10 @@ const Discord = require('discord.js');
 
 exports.help = {
   name: 'setcolor',
-  helpname: 'color',
+  helpname: 'setcolor',
   description: "Permet de changer la couleur des embed",
-  help: 'color [#hex]',
+  aliases: ['color'],
+  help: 'setcolor <#hex>',
 };
 
 exports.run = async (bot, message, args, config) => {
