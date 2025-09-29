@@ -5,7 +5,7 @@ const { EmbedBuilder } = require('discord.js');
 exports.help = {
   name: 'gend',
   helpname: 'gend <messsageId>',
-  description: 'Permet de mettre fin à un giveaway',
+  description: 'Permet de terminer un giveaway',
   help: 'gend <messageId>'
 };
 
@@ -94,7 +94,7 @@ if (publicStatut) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
     .setColor(parseInt(config.color.replace('#', ''), 16));
-    return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),500));
+    return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),2000));
   }
 
 bot.giveawaysManager.end(args[0], null, {

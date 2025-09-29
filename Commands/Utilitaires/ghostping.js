@@ -4,7 +4,7 @@ const { EmbedBuilder } = require('discord.js');
 
 exports.help = {
   name: 'ghostping',
-  helpname: 'ghostping <#salon,#salon2,...>',
+  helpname: 'ghostping <#1,#etc>',
   description: "Permet de configurer le ghostping",
   help: "ghostping <#01,#02,..>\nTu peux définir plusieurs salons en les séparant par des virgules sans espaces",
 };
@@ -94,7 +94,7 @@ if (publicStatut) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
     .setColor(parseInt(config.color.replace('#', ''), 16));
-    return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),500));
+    return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),2000));
   }
 
 
@@ -111,7 +111,7 @@ if (publicStatut) {
         [message.guild.id, channelId.join(',')],
         (err) => {
           if (err) return
-          message.reply("Les salons pour le Ghostping : " + channelId.map(id => `<#${id}>`).join(', '));
+          message.reply("Les salons pour le Ghostping: " + channelId.map(id => `<#${id}>`).join(', '));
         }
       );
     }

@@ -5,7 +5,7 @@ const { EmbedBuilder } = require('discord.js');
 exports.help = {
   name: 'emoji',
   helpname: 'emoji <emoji>',
-  description: "Permet de copier un emoji",
+  description: "Permet de créer un emoji",
   help: 'emoji <emoji>',
 };
 
@@ -94,7 +94,7 @@ if (publicStatut) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
     .setColor(parseInt(config.color.replace('#', ''), 16));
-    return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),500));
+    return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),2000));
   }
 
   const emj = args[0].match(/<(a)?:([a-zA-Z0-9_]+):(\d+)>/);
@@ -104,6 +104,6 @@ if (publicStatut) {
     const id = emj[3];
     const url = `https://cdn.discordapp.com/emojis/${id}.${animated ? 'gif' : 'png'}?v=1`;
     const emoji = await message.guild.emojis.create({ name, attachment: url });
-      return message.reply(`L'émoji <${animated ? 'a' : ''}:${name}:${emoji.id}> a été ajouté.`);
+      return message.reply(`<${animated ? 'a' : ''}:${name}:${emoji.id}> a été ajouté au serveur.`);
   }
 };

@@ -5,7 +5,7 @@ const { EmbedBuilder } = require('discord.js');
 exports.help = {
   name: 'greroll',
   helpname: 'greroll <messageId>',
-  description: 'Permet de choisir un nouveau gagnant pour un giveaway',
+  description: 'Permet de prendre un nouveau gagnant pour un giveaway',
   help: 'greroll <messageId>'
 };
 
@@ -94,7 +94,7 @@ if (publicStatut) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
     .setColor(parseInt(config.color.replace('#', ''), 16));
-    return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),500));
+    return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),2000));
   }
 
 bot.giveawaysManager.reroll(args[0], {
