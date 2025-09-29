@@ -44,7 +44,7 @@ bot.giveawaysManager.on('giveawayEnded', async (giveaway, winners) => {
           `Participants: ${participantsCount}\n` +
           `Gagnant(s): ${winners.map(w => `<@${w.id}>`).join(', ') || "Aucun"}\n`
         )
-        .setColor(config.color);
+        .setColor(parseInt(config.color.replace('#', ''), 16));
       await message.edit({ embeds: [embed], components: [] });
     }, 1000);
   }

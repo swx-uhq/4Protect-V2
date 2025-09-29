@@ -66,7 +66,7 @@ module.exports = {
       )
       .setThumbnail(interaction.user.displayAvatarURL({ dynamic: true }))
       .setTimestamp()
-      .setColor(config.color);
+      .setColor(parseInt(config.color.replace('#', ''), 16));
 
     await interaction.reply({ embeds: [embed] });
   }

@@ -107,7 +107,7 @@ if (publicStatut) {
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
-    .setColor(config.color);
+    .setColor(parseInt(config.color.replace('#', ''), 16));
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),500));
   }
 
@@ -127,7 +127,7 @@ if (publicStatut) {
               { name: 'Utilisation', value: `\`${config.prefix}${command.help.help}\`` },
               { name: 'Alias', value: command.help.aliases ? command.help.aliases.join(', ') : '  ' }
             )
-            .setColor(config.color)
+            .setColor(parseInt(config.color.replace('#', ''), 16))
             .setFooter({ text: "4Protect V2" });
           await message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
           cmdchec = true;
@@ -139,7 +139,7 @@ if (publicStatut) {
     if (!cmdchec) {
       const notFoundEmbed = new EmbedBuilder()
         .setDescription(`La commande \`${args[0]}\` n'existe pas.`)
-        .setColor(config.color)
+        .setColor(parseInt(config.color.replace('#', ''), 16))
         .setFooter({ text: "4Protect V2" });
       await message.reply({ embeds: [notFoundEmbed], allowedMentions: { repliedUser: false } });
     }
@@ -173,7 +173,7 @@ for (let i = 0; i < categories.length; i++) {
       embed: new EmbedBuilder()
         .setTitle(`${category}`)
         .setDescription(`Pour avoir de l’aide sur une commande, utilisez \`${config.prefix}help <commande>\`\nLes paramètres entre \`<...>\` sont obligatoires tandis que ceux entre \`[...]\` sont facultatifs\n\n${commands.join('\n\n')}`)
-        .setColor(config.color)
+        .setColor(parseInt(config.color.replace('#', ''), 16))
         .setFooter({ text: "4Protect V2" })
     });
   }

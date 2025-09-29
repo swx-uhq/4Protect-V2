@@ -95,7 +95,7 @@ if (publicStatut) {
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
-    .setColor(config.color);
+    .setColor(parseInt(config.color.replace('#', ''), 16));
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),500));
   }
 
@@ -111,7 +111,7 @@ if (publicStatut) {
   await message.channel.bulkDelete(fetched);
   const response = await message.channel.send(`Les messages viennent d'être supprimés par ${message.author}`);
           const embed = new Discord.EmbedBuilder()
-        .setColor(config.color)
+        .setColor(parseInt(config.color.replace('#', ''), 16))
         .setDescription(`<@${message.author.id}> a supprimé ${amount - 1} messages dans le salon <#${message.channel.id}>`)
         .setTimestamp();
   

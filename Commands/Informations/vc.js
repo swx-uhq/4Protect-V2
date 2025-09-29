@@ -95,7 +95,7 @@ if (publicStatut) {
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
-    .setColor(config.color);
+    .setColor(parseInt(config.color.replace('#', ''), 16));
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),500));
   }
 
@@ -108,7 +108,7 @@ if (publicStatut) {
 
     const embed = new EmbedBuilder()
       .setTitle(`${message.guild.name + " Statistiques"}`)
-      .setColor(config.color)
+      .setColor(parseInt(config.color.replace('#', ''), 16))
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setDescription(`*Membres :* **${total}** \n*En ligne :* **${online}** \n*En vocal :* **${vocal}**  \n*Boost :* **${boost}**`)
 

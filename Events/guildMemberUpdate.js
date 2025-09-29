@@ -68,13 +68,13 @@ module.exports = {
     if (oldMember.communicationDisabledUntilTimestamp !== newMember.communicationDisabledUntilTimestamp) {
   if (newMember.isCommunicationDisabled()) {
     const embed = new EmbedBuilder()
-      .setColor(config.color)
+      .setColor(parseInt(config.color.replace('#', ''), 16))
       .setDescription(`<@${newMember.id}> a été timeout jusqu'au <t:${Math.floor(newMember.communicationDisabledUntilTimestamp / 1000)}:F>`)
       .setTimestamp();
     sendLog(newMember.guild, embed, 'modlog');
   } else {
     const embed = new EmbedBuilder()
-      .setColor(config.color)
+      .setColor(parseInt(config.color.replace('#', ''), 16))
       .setDescription(`<@${newMember.id}> n'est plus timeout`)
       .setTimestamp();
     sendLog(newMember.guild, embed, 'modlog');
@@ -83,13 +83,13 @@ module.exports = {
 
         if (!oldMember.premiumSince && newMember.premiumSince) {
       const embed = new EmbedBuilder()
-        .setColor(config.color)
+        .setColor(parseInt(config.color.replace('#', ''), 16))
         .setDescription(`<@${newMember.id}> a boosté le serveur`)
         .setTimestamp();
       sendLog(newMember.guild, embed, 'boostlog');
     } else if (oldMember.premiumSince && !newMember.premiumSince) {
       const embed = new EmbedBuilder()
-        .setColor(config.color)
+        .setColor(parseInt(config.color.replace('#', ''), 16))
         .setDescription(`<@${newMember.id}> a retiré son boost du serveur.`)
         .setTimestamp();
       sendLog(newMember.guild, embed, 'boostlog');
@@ -114,7 +114,7 @@ module.exports = {
 
     if (addedRoles.size > 0) {
       const embed = new EmbedBuilder()
-        .setColor(config.color)
+        .setColor(parseInt(config.color.replace('#', ''), 16))
         .setDescription(
           `<@${newMember.id}> a reçu le(s) rôle(s) : ${addedRoles.map(r => `<@&${r.id}>`).join(', ')}\n` +
           (executor ? `Ajouté par: <@${executor.id}>` : '')
@@ -125,7 +125,7 @@ module.exports = {
 
     if (removedRoles.size > 0) {
       const embed = new EmbedBuilder()
-        .setColor(config.color)
+        .setColor(parseInt(config.color.replace('#', ''), 16))
         .setDescription(
           `<@${newMember.id}> a perdu le(s) rôle(s) : ${removedRoles.map(r => `<@&${r.id}>`).join(', ')}\n` +
           (executor ? `Retiré par: <@${executor.id}>` : '')

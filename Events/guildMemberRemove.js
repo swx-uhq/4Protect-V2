@@ -12,7 +12,7 @@ module.exports = {
     const kickLog = fetchedLogs.entries.first();
     if (kickLog && kickLog.target.id === member.id && Date.now() - kickLog.createdTimestamp < 5000) {
       const embed = new EmbedBuilder()
-        .setColor(config.color)
+        .setColor(parseInt(config.color.replace('#', ''), 16))
         .setDescription(`<@${member.id}> a été kick par <@${kickLog.executor.id}>`)
         .setTimestamp();
       sendLog(member.guild, embed, 'modlog');

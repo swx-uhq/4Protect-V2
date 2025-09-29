@@ -51,7 +51,7 @@ const al = async (message) => {
           message.delete().catch(console.error);
 
           const embed = new EmbedBuilder()
-            .setColor(config.color)
+            .setColor(parseInt(config.color.replace('#', ''), 16))
             .setDescription(`Vous n'avez pas le droit d'envoyer des liens <@${message.author.id}>`)
           message.channel.send({ embeds: [embed] }).then(msg => {
             setTimeout(() => {

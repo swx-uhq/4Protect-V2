@@ -62,7 +62,7 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setTitle(`Confession #${confessionNumber}`)
       .setDescription(confession)
-      .setColor(config.color);
+      .setColor(parseInt(config.color.replace('#', ''), 16));
 
     const messages = await confessChannel.messages.fetch({ limit: 10 });
     const lastBotMsg = messages.find(m => m.author.id === interaction.client.user.id && m.components.length > 0);
@@ -148,7 +148,7 @@ if (interaction.isButton() && interaction.customId.startsWith('giveaway_')) {
           .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
           .setTitle('Suggestion')
           .setDescription(suggestion)
-          .setColor(config.color);
+          .setColor(parseInt(config.color.replace('#', ''), 16));
 
         const rowBtn = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
@@ -213,7 +213,7 @@ if (interaction.isButton() && interaction.customId.startsWith('giveaway_')) {
             new EmbedBuilder()
               .setTitle('Ticket - ' + optiontxt)
               .setDescription('Expliquez votre problème, un membre du staff va vous répondre.\n\nPour fermer le ticket, cliquez sur le bouton fermer le ticket')
-              .setColor(config.color)
+              .setColor(parseInt(config.color.replace('#', ''), 16))
               .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
               .setThumbnail(interaction.user.displayAvatarURL())
               .setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })

@@ -95,7 +95,7 @@ if (publicStatut) {
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
-    .setColor(config.color);
+    .setColor(parseInt(config.color.replace('#', ''), 16));
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),500));
   }
 
@@ -108,7 +108,7 @@ if (publicStatut) {
 
     const infoMessage = await channel.send(`Le salon a été déverrouillé par <@${message.author.id}>.`);
             const embed = new Discord.EmbedBuilder()
-          .setColor(config.color)
+          .setColor(parseInt(config.color.replace('#', ''), 16))
           .setDescription(`<@${message.author.id}> a unlock <#${channel.id}>`)
           .setTimestamp();
     

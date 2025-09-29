@@ -95,13 +95,13 @@ if (publicStatut) {
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
-    .setColor(config.color);
+    .setColor(parseInt(config.color.replace('#', ''), 16));
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),500));
   }
     const embed = new EmbedBuilder()
         .setTitle("Invitation")
         .setDescription("Pour m'inviter, il suffit de cliquer sur le bouton ci-dessous.")
-        .setColor(config.color);
+        .setColor(parseInt(config.color.replace('#', ''), 16));
 
     const button = new ButtonBuilder()
         .setLabel("J'accepte")

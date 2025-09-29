@@ -5,7 +5,7 @@ const { EmbedBuilder } = require('discord.js');
 exports.help = {
   name: 'calc',
   helpname: 'calc <calcul>',
-  description: 'Permet de faires des calculs simples',
+  description: 'Permet de faire un calcul simple',
   help: 'calc <calcul> | multiplier = * | diviser = /'
 };
 
@@ -93,13 +93,13 @@ if (publicStatut) {
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
-    .setColor(config.color);
+    .setColor(parseInt(config.color.replace('#', ''), 16))
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),500));
   }
 
     const result = eval(args.join(" ").replace(/[^-()\d/*+.%]/g, ''))
     const embed = new Discord.EmbedBuilder()
-      .setColor(config.color)
+      .setColor(parseInt(config.color.replace('#', ''), 16))
       .addFields(
         { name: "Calculatrice", value: `\`\`\`${args.join(" ")}\`\`\`` },
         { name: "Résultat", value: `\`\`\`${result}\`\`\`` }

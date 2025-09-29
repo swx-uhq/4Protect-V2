@@ -93,13 +93,13 @@ if (publicStatut) {
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
-    .setColor(config.color);
+    .setColor(parseInt(config.color.replace('#', ''), 16));
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),500));
   }
 
   const errorEmbed = new EmbedBuilder()
     .setDescription(`Utilisation: ${config.prefix}tempvoc <salon> <catégorie id>\``)
-    .setColor(config.color)
+    .setColor(parseInt(config.color.replace('#', ''), 16))
 
   let arg = message.content.trim().split(/ +/g);
   if (!arg[1] && args[0] && args[0].toLowerCase() === 'off') {
@@ -134,7 +134,7 @@ if (!category || category.type !== Discord.ChannelType.GuildCategory) {
       }
 
       const embed = new EmbedBuilder()
-        .setColor(config.color)
+        .setColor(parseInt(config.color.replace('#', ''), 16))
         .setDescription(`La vocal temporaire est configurée.\n> Catégorie: <#${categoryId}>\n> Salon: <#${channel.id}>`)
         .setTimestamp()
 

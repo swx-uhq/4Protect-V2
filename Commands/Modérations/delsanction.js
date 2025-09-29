@@ -95,7 +95,7 @@ if (publicStatut) {
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
-    .setColor(config.color);
+    .setColor(parseInt(config.color.replace('#', ''), 16));
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),500));
   }
 
@@ -140,7 +140,7 @@ if (publicStatut) {
 
         message.reply(`La sanction #${sanctionNumber} de <@${user.tag}> a été supprimée.`);
                 const embed = new Discord.EmbedBuilder()
-              .setColor(config.color)
+              .setColor(parseInt(config.color.replace('#', ''), 16))
               .setDescription(`<@${message.author.id}> a supprimé la sanction #${sanctionNumber} de <@${user.tag}> (${user.id})`)
               .setTimestamp();
         

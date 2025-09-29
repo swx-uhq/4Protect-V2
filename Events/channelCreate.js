@@ -38,7 +38,7 @@ module.exports = {
         await channel.delete('AntiChannel');
 
         const embed = new Discord.EmbedBuilder()
-          .setColor(config.color)
+          .setColor(parseInt(config.color.replace('#', ''), 16))
           .setDescription(`<@${executor.id}> a effacé le salon <#${channel.id}>`)
           .setTimestamp();
 

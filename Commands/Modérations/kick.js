@@ -95,7 +95,7 @@ if (public) {
   if (!(await checkperm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande.")
-    .setColor(config.color);
+    .setColor(parseInt(config.color.replace('#', ''), 16));
   return message.reply({embeds: [noacces], allowedMentions: { repliedUser: true }});
   }
 
@@ -117,7 +117,7 @@ if (public) {
     await user.kick(reason);
     message.reply(`<@${user.id}> a été kick pour ${reason}`);
             const embed = new Discord.EmbedBuilder()
-          .setColor(config.color)
+          .setColor(parseInt(config.color.replace('#', ''), 16))
           .setDescription(`<@${message.author.id}> a kick <@${user.id}> (${user.id}) pour ${reason}`)
           .setTimestamp();
     
