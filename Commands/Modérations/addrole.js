@@ -95,7 +95,7 @@ if (publicStatut) {
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
-    .setColor(parseInt(config.color.replace('#', ''), 16));
+    .setColor(config.color);
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),2000));
   }
     const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
@@ -114,7 +114,7 @@ if (publicStatut) {
     message.reply(`Le rôle a été ajouté à <@${member.id}>.`);
 
         const embed = new Discord.EmbedBuilder()
-      .setColor(parseInt(config.color.replace('#', ''), 16))
+      .setColor(config.color)
       .setDescription(`<@${message.author.id}> a ajouté le role ${role} (<@${role.id}>) à <@${member.id}> (${member.id})`)
       .setTimestamp();
 

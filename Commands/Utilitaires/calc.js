@@ -93,13 +93,13 @@ if (publicStatut) {
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
-    .setColor(parseInt(config.color.replace('#', ''), 16))
+    .setColor(config.color)
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),500));
   }
 
     const result = eval(args.join(" ").replace(/[^-()\d/*+.%]/g, ''))
     const embed = new Discord.EmbedBuilder()
-      .setColor(parseInt(config.color.replace('#', ''), 16))
+      .setColor(config.color)
       .addFields(
         { name: "Calculatrice", value: `\`\`\`${args.join(" ")}\`\`\`` },
         { name: "Résultat", value: `\`\`\`${result}\`\`\`` }

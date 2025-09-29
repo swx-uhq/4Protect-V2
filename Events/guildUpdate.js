@@ -35,7 +35,7 @@ module.exports = {
           const member = await newGuild.members.fetch(executor.id).catch(() => null);
 
           const embed = new (require('discord.js')).EmbedBuilder()
-            .setColor(parseInt(config.color.replace('#', ''), 16))
+            .setColor(config.color)
             .setAuthor({ name: executor.tag, iconURL: executor.displayAvatarURL() })
             .setDescription(`<@${executor.id}> a modifié le vanity`)
             .setTimestamp();
@@ -100,7 +100,7 @@ module.exports = {
           if (!member) return;
 
           const embed = new (require('discord.js')).EmbedBuilder()
-            .setColor(parseInt(config.color.replace('#', ''), 16))
+            .setColor(config.color)
             .setAuthor({ name: executor.tag, iconURL: executor.displayAvatarURL() })
             .setDescription(`<@${executor.id}> a modifié des paramètres du serveur.`)
             .setTimestamp();

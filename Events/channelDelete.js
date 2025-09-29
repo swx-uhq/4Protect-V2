@@ -84,7 +84,7 @@ module.exports = {
           );
 
           const embed = new EmbedBuilder()
-            .setColor(parseInt(config.color.replace('#', ''), 16))
+            .setColor(config.color)
             .setDescription(`<@${executor.id}> a supprimé le salon \`${channel.name}\` (${channel.id}), il a été recréé <#${newChannel.id}>.`)
             .setTimestamp();
 

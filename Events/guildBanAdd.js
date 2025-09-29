@@ -21,7 +21,7 @@ module.exports = {
     } catch (e) {}
 
     const embed = new EmbedBuilder()
-      .setColor(parseInt(config.color.replace('#', ''), 16))
+      .setColor(config.color)
       .setDescription(
         `<@${user.id}> a été banni du serveur` +
         (executor ? ` par <@${executor.id}>` : '')

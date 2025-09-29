@@ -16,7 +16,7 @@ module.exports = {
     bot.deletedMessages = deletedMessages;
 
     const embed = new Discord.EmbedBuilder()
-      .setColor(parseInt(config.color.replace('#', ''), 16))
+      .setColor(config.color)
       .setTitle('Message supprimé')
       .setAuthor({
         name: message.author?.tag || ' ',

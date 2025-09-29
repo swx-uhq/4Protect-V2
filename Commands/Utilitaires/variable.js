@@ -93,7 +93,7 @@ if (publicStatut) {
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
-    .setColor(parseInt(config.color.replace('#', ''), 16));
+    .setColor(config.color);
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),2000));
   }
   const variables = [
@@ -109,6 +109,6 @@ if (publicStatut) {
   const embed = new Discord.EmbedBuilder()
     .setTitle('Variables pour les messages de bienvenue')
     .setDescription(desc)
-    .setColor(parseInt(config.color.replace('#', ''), 16));
+    .setColor(config.color);
   message.reply({ embeds: [embed] });
 };

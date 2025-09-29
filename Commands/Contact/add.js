@@ -95,7 +95,7 @@ if (publicStatut) {
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
-    .setColor(parseInt(config.color.replace('#', ''), 16));
+    .setColor(config.color);
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),2000));
   }
   const userArg = args[0];
@@ -108,7 +108,7 @@ await channel.permissionOverwrites.edit(user.id, { ViewChannel: true });
 message.reply(`${user} a été ajouté au ticket`);
 
 const embed = new Discord.EmbedBuilder()
-  .setColor(parseInt(config.color.replace('#', ''), 16))
+  .setColor(config.color)
   .setDescription(`<@${message.author.id}> a ajouté <@${user.id}> au salon ${channel.name}`)
   .setTimestamp();
 

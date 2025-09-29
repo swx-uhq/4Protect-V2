@@ -28,7 +28,7 @@ module.exports = {
       if (entryCreate) {
         const executor = entryCreate.executor;
         const embed = new Discord.EmbedBuilder()
-          .setColor(parseInt(config.color.replace('#', ''), 16))
+          .setColor(config.color)
           .setAuthor({ name: executor.tag, iconURL: executor.displayAvatarURL() })
           .setDescription(`<@${executor.id}> a créé un webhook dans <#${channel.id}>`)
           .setTimestamp();
@@ -40,7 +40,7 @@ module.exports = {
       if (entryDelete) {
         const executor = entryDelete.executor;
         const embedd = new Discord.EmbedBuilder()
-          .setColor(parseInt(config.color.replace('#', ''), 16))
+          .setColor(config.color)
           .setAuthor({ name: executor.tag, iconURL: executor.displayAvatarURL() })
           .setDescription(`<@${executor.id}> a supprimé un webhook dans <#${channel.id}>`)
           .setTimestamp();

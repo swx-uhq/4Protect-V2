@@ -94,7 +94,7 @@ if (publicStatut) {
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
-    .setColor(parseInt(config.color.replace('#', ''), 16));
+    .setColor(config.color);
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),2000));
   }
   
@@ -141,7 +141,7 @@ if (publicStatut) {
   }
   embed.setDescription(config.description);
   if (config.color) {
-    embed.setColor(parseInt(config.color.replace('#', ''), 16));
+    embed.setColor(config.color);
   }
   let icon = message.guild.iconURL({ dynamic: true });
   if (config.tfooter && config.tfooter.trim() !== '') {

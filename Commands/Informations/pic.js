@@ -95,7 +95,7 @@ if (publicStatut) {
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
-    .setColor(parseInt(config.color.replace('#', ''), 16));
+    .setColor(config.color);
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),2000));
   }
     let user = message.mentions.users.first() || (args[0] ? await bot.users.fetch(args[0]).catch(() => null) : message.author);
@@ -108,7 +108,7 @@ if (publicStatut) {
     const embed = new EmbedBuilder()
         .setTitle(`${user.username}`)
         .setImage(avatarURL)
-        .setColor(parseInt(config.color.replace('#', ''), 16));
+        .setColor(config.color);
 
     const jeveux = new ButtonBuilder()
         .setLabel("Je veux l'avoir")

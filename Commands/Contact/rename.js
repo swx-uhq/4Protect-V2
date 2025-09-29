@@ -95,7 +95,7 @@ if (publicStatut) {
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
-    .setColor(parseInt(config.color.replace('#', ''), 16));
+    .setColor(config.color);
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),2000));
   }
 if (!args[0]) {
@@ -118,12 +118,12 @@ db.get('SELECT channelId FROM ticketchannel WHERE channelId = ?', [message.chann
 
   const embed = new EmbedBuilder()
     .setDescription(`Le ticket a été renommé en ${nouv}`)
-    .setColor(parseInt(config.color.replace('#', ''), 16));
+    .setColor(config.color);
 
   message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
 
   const logs = new Discord.EmbedBuilder()
-    .setColor(parseInt(config.color.replace('#', ''), 16))
+    .setColor(config.color)
     .setDescription(`<@${message.author.id}> a renommé le salon ${anc} en ${nouv}`)
     .setTimestamp();
 

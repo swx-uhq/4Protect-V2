@@ -9,7 +9,7 @@ module.exports = {
     if (oldMessage.content === newMessage.content) return; 
 
     const embed = new Discord.EmbedBuilder()
-      .setColor(parseInt(config.color.replace('#', ''), 16))
+      .setColor(config.color)
       .setTitle('Message modifié')
       .setAuthor({
         name: oldMessage.author?.tag || ' ',

@@ -93,21 +93,21 @@ db.get('SELECT * FROM tempvoc_channels WHERE channelId = ?', [oldState.channel.i
         if (oldState.channelId && !newState.channelId) {
 
           const embed = new EmbedBuilder()
-            .setColor(parseInt(config.color.replace('#', ''), 16))
+            .setColor(config.color)
             .setDescription(`<@${oldState.member.id}> s'est déconnecté de <#${oldState.channelId}>`)
             .setTimestamp();
           sendLog(oldState.guild, embed, 'voicelog');
         } else if (!oldState.channelId && newState.channelId) {
 
           const embed = new EmbedBuilder()
-            .setColor(parseInt(config.color.replace('#', ''), 16))
+            .setColor(config.color)
             .setDescription(`<@${newState.member.id}> s'est connecté à <#${newState.channelId}>`)
             .setTimestamp();
           sendLog(newState.guild, embed, 'voicelog');
         } else if (oldState.channelId && newState.channelId && oldState.channelId !== newState.channelId) {
 
           const embed = new EmbedBuilder()
-            .setColor(parseInt(config.color.replace('#', ''), 16))
+            .setColor(config.color)
             .setDescription(`<@${newState.member.id}> a quitté <#${oldState.channelId}> pour aller vers <#${newState.channelId}>`)
             .setTimestamp();
           sendLog(newState.guild, embed, 'voicelog');
@@ -117,7 +117,7 @@ db.get('SELECT * FROM tempvoc_channels WHERE channelId = ?', [oldState.channel.i
       if (oldState.mute !== newState.mute) {
         const action = newState.mute ? "s'est mute" : "s'est démute";
         const embed = new EmbedBuilder()
-          .setColor(parseInt(config.color.replace('#', ''), 16))
+          .setColor(config.color)
           .setDescription(`<@${newState.member.id}> ${action} dans <#${newState.channelId || oldState.channelId}>`)
           .setTimestamp();
         sendLog(newState.guild, embed, 'voicelog');
@@ -126,7 +126,7 @@ db.get('SELECT * FROM tempvoc_channels WHERE channelId = ?', [oldState.channel.i
       if (oldState.deaf !== newState.deaf) {
         const action = newState.deaf ? "s'est mute casque" : "s'est démute casque";
         const embed = new EmbedBuilder()
-          .setColor(parseInt(config.color.replace('#', ''), 16))
+          .setColor(config.color)
           .setDescription(`<@${newState.member.id}> ${action} dans <#${newState.channelId || oldState.channelId}>`)
           .setTimestamp();
         sendLog(newState.guild, embed, 'voicelog');

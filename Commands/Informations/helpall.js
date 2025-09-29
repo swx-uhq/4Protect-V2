@@ -94,7 +94,7 @@ if (publicStatut) {
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
-    .setColor(parseInt(config.color.replace('#', ''), 16));
+    .setColor(config.color);
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),2000));
   }
 
@@ -106,7 +106,7 @@ db.all(`SELECT * FROM cmdperm WHERE guild = ?`, [message.guild.id], (err, rows) 
 
   const embed = new Discord.EmbedBuilder()
     .setTitle('Liste des Commandes par Permissions')
-    .setColor(parseInt(config.color.replace('#', ''), 16))
+    .setColor(config.color)
     .setFooter({ text: `${config.prefix}perms pour voir quelles permissions sont liées à chaque rôle` });
 
   const publicCommands = rows.filter(row => row.perm === 'public').map(row => `\`${row.command}\``);

@@ -93,26 +93,26 @@ if (publicStatut) {
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
     .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
-    .setColor(parseInt(config.color.replace('#', ''), 16));
+    .setColor(config.color);
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),2000));
   }
 
   const arg = message.content.trim().split(/ +/g);
   const embed1 = new EmbedBuilder()
     .setDescription(`Use: ${config.prefix}confess <salon/off>`)
-    .setColor(parseInt(config.color.replace('#', ''), 16))
+    .setColor(config.color)
   const embed2 = new EmbedBuilder()
     .setDescription(`<@${message.author.id}>, le salon est déjà désactivé`)
-    .setColor(parseInt(config.color.replace('#', ''), 16))
+    .setColor(config.color)
   const embed3 = new EmbedBuilder()
     .setDescription(`<@${message.author.id}>, le salon est déjà configuré sur ce salon`)
-    .setColor(parseInt(config.color.replace('#', ''), 16))
+    .setColor(config.color)
   const embed4 = new EmbedBuilder()
     .setDescription(`<@${message.author.id}>, le salon a bien été désactivé !`)
-    .setColor(parseInt(config.color.replace('#', ''), 16))
+    .setColor(config.color)
   const embed5 = new EmbedBuilder()
     .setDescription(`<@${message.author.id}>, le salon des confesss a bien été activé`)
-    .setColor(parseInt(config.color.replace('#', ''), 16))
+    .setColor(config.color)
 
   if (!arg[1]) return message.reply({ embeds: [embed1] });
 
@@ -156,7 +156,7 @@ if (publicStatut) {
         const embed = new EmbedBuilder()
           .setTitle(`Confession`)
           .setDescription('Clique sur le bouton ci-dessous pour te confesser')
-          .setColor(parseInt(config.color.replace('#', ''), 16));
+          .setColor(config.color);
 
         const button = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
@@ -184,7 +184,7 @@ if (publicStatut) {
         const embed = new EmbedBuilder()
           .setTitle(`Confession`)
           .setDescription('Clique sur le bouton ci-dessous pour te confesser')
-          .setColor(parseInt(config.color.replace('#', ''), 16));
+          .setColor(config.color);
 
         const button = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
