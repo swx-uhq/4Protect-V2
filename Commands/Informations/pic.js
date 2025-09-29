@@ -94,9 +94,9 @@ if (publicStatut) {
 
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
-    .setDescription("Vous n'avez pas la permission d'utiliser cette commande.")
+    .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
     .setColor(config.color);
-  return message.reply({embeds: [noacces], allowedMentions: { repliedUser: true }});
+    return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),500));
   }
     let user = message.mentions.users.first() || (args[0] ? await bot.users.fetch(args[0]).catch(() => null) : message.author);
 

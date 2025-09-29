@@ -94,9 +94,9 @@ if (publicStatut) {
 
   if (!(await checkPerm(message, exports.help.name))) {
     const noacces = new EmbedBuilder()
-    .setDescription("Vous n'avez pas la permission d'utiliser cette commande.")
+    .setDescription("Vous n'avez pas la permission d'utiliser cette commande")
     .setColor(config.color);
-  return message.reply({embeds: [noacces], allowedMentions: { repliedUser: true }});
+    return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),500));
   }
 db.get('SELECT channelId FROM ticketchannel WHERE channelId = ?', [message.channel.id], async (err, row) => {
   if (err) return console.error(err);
