@@ -100,8 +100,8 @@ if (publicStatut) {
     return message.reply({embeds:[noacces],allowedMentions:{repliedUser:true}}).then(m=>setTimeout(()=>m.delete().catch(()=>{}),2000));
   }
 
-    const color = args[0];
-  if (!color) {
+  const color = args[0];
+  if (!color || !/^#([0-9a-fA-F]{6})$/i.test(color)) {
     return message.reply(`La couleur est ${config.color}.`);
   }
 
