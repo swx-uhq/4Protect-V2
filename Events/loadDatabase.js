@@ -29,6 +29,10 @@ const dbcreate = () => {
       `CREATE TABLE IF NOT EXISTS confesslogs (guildId TEXT, userId TEXT, message TEXT)`,
       `CREATE TABLE IF NOT EXISTS Suggest (guildId TEXT PRIMARY KEY, channel TEXT)`,
       `CREATE TABLE IF NOT EXISTS joinsettings (guildId TEXT PRIMARY KEY, channel TEXT, message TEXT)`,
+      `CREATE TABLE IF NOT EXISTS piconly_channels (
+        guild TEXT NOT NULL,
+        channel_id TEXT PRIMARY KEY
+      )`,
       `CREATE TABLE IF NOT EXISTS captcha (guild TEXT PRIMARY KEY, id TEXT)`,
       `CREATE TABLE IF NOT EXISTS vouch (guild TEXT PRIMARY KEY, total INTEGER DEFAULT 0)`,
       `CREATE TABLE IF NOT EXISTS tempvoc_channels (channelId TEXT PRIMARY KEY, guildId TEXT)`,
