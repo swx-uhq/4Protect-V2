@@ -11,6 +11,7 @@ const categories = [
   'Gestions',
   'Antiraid',
   'Logs',
+  'Jeux',
   'Contact',
   'Paramètres',
   'Informations'
